@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useTypewriter } from '../hooks/useTypewriter';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -76,6 +78,48 @@ const buttonVariants = {
   }
 };
 
+function TypewriterHeadline() {
+  const line1Text = "The numbers don't agree,";
+  const line2Text = "and everyone has a theory why.";
+  
+  const { displayedText: line1Display, isComplete: line1Complete } = useTypewriter(line1Text, 100, 400);
+  const { displayedText: line2Display, isComplete: line2Complete } = useTypewriter(
+    line2Text, 
+    100, 
+    400 + (line1Text.length * 100) + 200
+  );
+
+  return (
+    <motion.h1 
+      className="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface leading-tight"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <span className="block relative">
+        {line1Display}
+        {!line1Complete && (
+          <motion.span 
+            className="inline-block w-1 h-[1.2em] bg-primary ml-1 align-text-bottom"
+            animate={{ opacity: [1, 0] }}
+            transition={{ duration: 0.6, repeat: Infinity }}
+          />
+        )}
+      </span>
+      <span className="block italic text-primary-container relative">
+        {line2Display}
+        {!line2Complete && (
+          <motion.span 
+            className="inline-block w-1 h-[1.2em] bg-primary ml-1 align-text-bottom"
+            animate={{ opacity: [1, 0] }}
+            transition={{ duration: 0.6, repeat: Infinity }}
+          />
+        )}
+      </span>
+    </motion.h1>
+  );
+}
+
 export default function Home() {
   return (
     <motion.div
@@ -121,17 +165,7 @@ export default function Home() {
             <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-primary">For Finance Teams Outgrowing Their Systems</p>
           </motion.div>
           
-          <motion.h1 
-            className="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface leading-tight"
-            variants={heroItemVariants}
-          >
-            <motion.span className="block" variants={heroItemVariants}>
-              The numbers don't agree,
-            </motion.span>
-            <motion.span className="block italic text-primary-container" variants={heroItemVariants}>
-              and everyone has a theory why.
-            </motion.span>
-          </motion.h1>
+          <TypewriterHeadline />
         </motion.div>
 
         <motion.p 
