@@ -14,6 +14,68 @@ const sectionReveal = {
   transition: { duration: 0.6, ease: "easeOut" }
 };
 
+// Hero animations
+const heroContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    }
+  }
+};
+
+const heroItemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+  }
+};
+
+const floatingDashVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+  },
+  float: {
+    y: [0, -8, 0],
+    transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+  }
+};
+
+const lineVariants = {
+  hidden: { scaleX: 0 },
+  visible: {
+    scaleX: 1,
+    transition: { duration: 1, delay: 0.8, ease: "easeOut" }
+  }
+};
+
+const buttonContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 1,
+    }
+  }
+};
+
+const buttonVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  }
+};
+
 export default function Home() {
   return (
     <motion.div
@@ -25,29 +87,87 @@ export default function Home() {
       className="page-transition"
     >
       {/* Hero Section */}
-      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding flex flex-col items-start gap-stack_lg">
-        <div className="flex flex-col gap-stack_sm">
-          <div className="flex items-center gap-stack_sm">
-            <span className="gold-dash"></span>
+      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding flex flex-col items-start gap-stack_lg relative overflow-hidden">
+        {/* Animated background accent */}
+        <motion.div 
+          className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary/5 blur-3xl pointer-events-none"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        <motion.div
+          className="relative z-10 flex flex-col gap-stack_sm"
+          variants={heroContainerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div className="flex items-center gap-stack_sm" variants={heroItemVariants}>
+            <motion.span 
+              className="gold-dash"
+              variants={floatingDashVariants}
+              animate="visible"
+              initial="hidden"
+              onAnimationComplete={() => {
+                // Start floating animation after initial reveal
+              }}
+            />
             <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-primary">For Finance Teams Outgrowing Their Systems</p>
-          </div>
-          <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface leading-tight">
-            The numbers don't agree, <br/>
-            <span className="italic text-primary-container">and everyone has a theory why.</span>
-          </h1>
-        </div>
-        <p className="font-body-lg text-body-lg max-w-2xl text-on-surface-variant">
+          </motion.div>
+          
+          <motion.h1 
+            className="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface leading-tight"
+            variants={heroItemVariants}
+          >
+            <motion.span className="block" variants={heroItemVariants}>
+              The numbers don't agree,
+            </motion.span>
+            <motion.span className="block italic text-primary-container" variants={heroItemVariants}>
+              and everyone has a theory why.
+            </motion.span>
+          </motion.h1>
+        </motion.div>
+
+        <motion.p 
+          className="font-body-lg text-body-lg max-w-2xl text-on-surface-variant relative z-10"
+          variants={heroItemVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.5, duration: 0.8 }}
+        >
           Trust decays when the board deck doesn't reconcile with the data warehouse. We design the technical architecture that ensures your ERP, billing, and reporting engines speak one language.
-        </p>
-        <div className="flex flex-wrap gap-stack_md mt-stack_sm">
-          <Link to="/work" className="btn-swipe bg-iron-ink text-surface-container-low px-stack_lg py-4 font-label-sm text-label-sm uppercase hover:text-white transition-all duration-300">
-            <span className="relative z-10">Read our thinking</span>
-          </Link>
-          <Link to="/services" className="btn-swipe border border-outline text-on-surface px-stack_lg py-4 font-label-sm text-label-sm uppercase hover:border-primary hover:text-primary transition-all duration-300">
-            <span className="relative z-10">What we do →</span>
-          </Link>
-        </div>
-        <div className="w-full mt-stack_lg hairline-gold"></div>
+        </motion.p>
+
+        <motion.div 
+          className="flex flex-wrap gap-stack_md mt-stack_sm relative z-10"
+          variants={buttonContainerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div variants={buttonVariants}>
+            <Link to="/work" className="btn-swipe bg-iron-ink text-surface-container-low px-stack_lg py-4 font-label-sm text-label-sm uppercase hover:text-white transition-all duration-300 block">
+              <span className="relative z-10">Read our thinking</span>
+            </Link>
+          </motion.div>
+          <motion.div variants={buttonVariants}>
+            <Link to="/services" className="btn-swipe border border-outline text-on-surface px-stack_lg py-4 font-label-sm text-label-sm uppercase hover:border-primary hover:text-primary transition-all duration-300 block">
+              <span className="relative z-10">What we do →</span>
+            </Link>
+          </motion.div>
+        </motion.div>
+
+        <motion.div 
+          className="w-full mt-stack_lg hairline-gold origin-left"
+          variants={lineVariants}
+          initial="hidden"
+          animate="visible"
+        />
       </section>
 
 
