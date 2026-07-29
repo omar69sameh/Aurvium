@@ -61,8 +61,13 @@
   .btn-swipe:hover::before {
     @apply scale-x-100;
   }
-  .btn-swipe:hover {
+  /* Light background buttons: text turns dark on hover */
+  .btn-swipe:not(.btn-swipe-dark):hover {
     color: #1A1916 !important;
+  }
+  /* Dark background buttons: text stays light on hover */
+  .btn-swipe.btn-swipe-dark:hover {
+    color: #EDE8DC !important;
   }
   .btn-swipe > * {
     @apply relative z-10;

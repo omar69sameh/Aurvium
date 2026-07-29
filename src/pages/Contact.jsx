@@ -38,9 +38,6 @@ export default function Contact() {
         <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-4">
           A short description of the system that&apos;s causing pain — reconciliation, recognition, reporting — is more useful than &quot;let&apos;s chat.&quot;
         </p>
-        <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-2">
-          This form starts a conversation, not an engagement. The first step is a short Initial Fit Conversation — 20–30 minutes over video, no preparation required — to understand whether this is genuinely a finance-systems problem and whether Discovery is the right first step. If it is, the paid Discovery engagement begins from there.
-        </p>
         <div className="w-full h-[1px] bg-outline-variant mt-8 border-b"></div>
       </section>
 
@@ -67,6 +64,35 @@ export default function Contact() {
 
       <section className="pb-section_v_padding max-w-max_width mx-auto px-gutter">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-stack_lg">
+          <motion.div className="lg:col-span-5 flex flex-col gap-stack_lg order-first lg:order-last" {...sectionReveal}>
+            <div className="border-l-2 border-primary-container pl-6 py-2">
+              <h4 className="font-eyebrow-mono text-label-sm uppercase text-primary tracking-widest mb-4">What Happens Next</h4>
+              <div className="flex flex-col gap-stack_md">
+                <p className="font-body-md text-on-surface-variant leading-relaxed">
+                  This form starts a conversation, not an engagement. The first step is a short Initial Fit Conversation — 20–30 minutes over video, no preparation required — to understand whether this is genuinely a finance-systems problem and whether Discovery is the right first step. If it is, the paid Discovery engagement begins from there.
+                </p>
+              </div>
+            </div>
+            
+            <div className="border-l-2 border-primary-container pl-6 py-2">
+              <h4 className="font-eyebrow-mono text-label-sm uppercase text-primary tracking-widest mb-4">Direct Contact</h4>
+              <div className="flex flex-col gap-stack_md">
+                <div>
+                  <p className="font-eyebrow-mono text-label-sm text-outline uppercase mb-1">Email</p>
+                  <a className="font-display-lg text-headline-md text-on-surface hover:text-primary transition-colors" href="mailto:hello@aurvium.com">hello@aurvium.com</a>
+                </div>
+                <div>
+                  <p className="font-eyebrow-mono text-label-sm text-outline uppercase mb-1">Response time</p>
+                  <p className="font-body-md text-on-surface-variant leading-relaxed font-light">Within one business day, to schedule the Initial Fit Conversation</p>
+                </div>
+                <div>
+                  <p className="font-eyebrow-mono text-label-sm text-outline uppercase mb-1">Based in</p>
+                  <p className="font-body-md text-on-surface-variant leading-relaxed font-light">[ City, region ]</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
           <motion.div className="lg:col-span-7 bg-surface-container-high p-stack_lg border border-outline-variant" {...sectionReveal}>
             <form className="flex flex-col gap-stack_lg" onSubmit={handleSubmit}>
               <div className="flex flex-col gap-2">
@@ -85,33 +111,10 @@ export default function Contact() {
                 <label className="font-eyebrow-mono text-label-sm uppercase text-primary" htmlFor="message">What&apos;s breaking?</label>
                 <textarea id="message" className="bg-transparent border border-outline p-4 font-body-md placeholder:text-outline-variant focus:border-primary transition-colors resize-none outline-none" rows={5} required></textarea>
               </div>
-              <button className="btn-swipe w-full md:w-max px-12 py-4 bg-on-background text-surface font-eyebrow-mono uppercase tracking-[0.2em] text-sm hover:text-white active:scale-95" type="submit">
+              <button className="btn-swipe w-full md:w-max px-12 py-4 bg-on-background text-surface font-eyebrow-mono uppercase tracking-[0.2em] text-sm active:scale-95" type="submit">
                 <span className="relative z-10">Send</span>
               </button>
-              <div className="mt-8 p-6 bg-primary-container/10 border-l-2 border-primary font-body-md text-sm text-on-surface-variant leading-relaxed">
-                <strong>Note for whoever wires this up:</strong> this form has no backend yet. Connect it to an email service (e.g. Formspree, a serverless function, or your host&apos;s native form handling) before this page goes live — right now, submitting it does nothing.
-              </div>
             </form>
-          </motion.div>
-
-          <motion.div className="lg:col-span-5 flex flex-col gap-stack_lg" {...sectionReveal} transition={{ delay: 0.1 }}>
-            <div className="border-l-2 border-primary-container pl-6 py-2">
-              <h4 className="font-eyebrow-mono text-label-sm uppercase text-primary tracking-widest mb-4">Direct Contact</h4>
-              <div className="flex flex-col gap-stack_md">
-                <div>
-                  <p className="font-eyebrow-mono text-label-sm text-outline uppercase mb-1">Email</p>
-                  <a className="font-display-lg text-headline-md text-on-surface hover:text-primary transition-colors" href="mailto:hello@aurvium.com">hello@aurvium.com</a>
-                </div>
-                <div>
-                  <p className="font-eyebrow-mono text-label-sm text-outline uppercase mb-1">Response time</p>
-                  <p className="font-body-md text-on-surface-variant leading-relaxed font-light">Within one business day, to schedule the Initial Fit Conversation</p>
-                </div>
-                <div>
-                  <p className="font-eyebrow-mono text-label-sm text-outline uppercase mb-1">Based in</p>
-                  <p className="font-body-md text-on-surface-variant leading-relaxed font-light">[ City, region ]</p>
-                </div>
-              </div>
-            </div>
           </motion.div>
         </div>
       </section>

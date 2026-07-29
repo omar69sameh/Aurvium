@@ -499,10 +499,10 @@ export default function Home() {
         </motion.div>
       </section>
       
-      {/* Contact */}
-      <section className="bg-surface py-section_v_padding text-on-surface relative overflow-hidden">
+      {/* Contact CTA - Full Bleed Dark Band */}
+      <section className="bg-iron-ink py-section_v_padding text-surface-container-low relative overflow-hidden w-full">
         <motion.div 
-          className="absolute -left-40 -bottom-40 w-96 h-96 rounded-full bg-primary/5 blur-3xl pointer-events-none"
+          className="absolute -right-40 top-1/3 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -516,10 +516,10 @@ export default function Home() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h2 className="font-headline-md text-headline-md max-w-2xl">Every finance system was designed. Even the accidental ones.</h2>
-          <p className="font-body-lg text-on-surface-variant">Tell us where yours might need a second look.</p>
+          <h2 className="font-headline-md text-headline-md max-w-2xl text-surface-bright">Every finance system was designed. Even the accidental ones.</h2>
+          <p className="font-body-lg text-surface-variant">Tell us where yours might need a second look.</p>
           <div className="mt-4">
-            <Link to="/contact" className="btn-swipe bg-iron-ink text-surface-container-low px-stack_lg py-4 font-label-sm text-label-sm uppercase hover:text-white inline-block">
+            <Link to="/contact" className="btn-swipe btn-swipe-dark bg-primary text-iron-ink px-stack_lg py-4 font-label-sm text-label-sm uppercase active:scale-95 inline-block">
               <span>Get in Touch</span>
             </Link>
           </div>
