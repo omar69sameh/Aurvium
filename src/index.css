@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-on-surface font-body-md;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Global focus styles for accessibility */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+
+  ::selection {
+    @apply bg-primary-fixed text-on-primary-fixed;
+  }
+}
+
+@layer utilities {
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-iron-ink focus:px-4 focus:py-3 focus:text-surface focus:no-underline;
+  }
+
+  .hairline-gold {
+    border-color: #b8922a;
+  }
+  .hairline-subtle {
+    border-color: #d1c5b0;
+  }
+  .gold-dash {
+    width: 22px;
+    height: 2px;
+    background-color: #b8922a;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+  .transition-aurvium {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  /* Button swipe transition effects */
+  .btn-swipe {
+    @apply relative overflow-hidden transition-all duration-500 ease-out z-10;
+  }
+  .btn-swipe::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-full -z-10 transition-transform duration-500 ease-out origin-left scale-x-0;
+    background-color: #D4AF5A;
+  }
+  .btn-swipe:hover::before {
+    @apply scale-x-100;
+  }
+  .btn-swipe:hover {
+    color: #1A1916 !important;
+  }
+  .btn-swipe > * {
+    @apply relative z-10;
+  }
+  .btn-swipe:active {
+    transform: scale(0.98);
+  }
+
+  /* Grid hover transition effects */
+  .grid-hover-effect {
+    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:border-primary/60 hover:bg-surface-variant/60;
+  }
+  .interactive-panel {
+    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/60 hover:bg-surface-container;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Page transitions */
+.page-transition {
+  width: 100%;
+}
