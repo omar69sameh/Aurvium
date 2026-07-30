@@ -355,12 +355,15 @@ export default function Home() {
           {["We're planning an ERP move and want to get the design right before we build.", "The board deck doesn't reconcile with our internal numbers.", "Revenue recognition has become a manual process every month-end.", "We're heading into due diligence and the numbers need to hold up.", "Pricing changed, and billing is more complicated than the system was built for.", "Reporting worked fine until it didn't — now nothing scales."].map((quote, idx) => (
             <motion.div 
               key={idx}
-              className="grid-hover-effect p-stack_lg border border-outline-variant bg-surface-container-low flex flex-col gap-stack_md hover:shadow-lg hover:border-primary transition-all duration-300"
+              className="p-stack_lg border-l-4 border-primary bg-surface-container-low/50 backdrop-blur-sm flex flex-col gap-stack_md hover:bg-surface-container-low hover:shadow-lg transition-all duration-300 group"
               variants={cardRevealVariants}
               whileHover="hover"
             >
-              <span className="material-symbols-outlined text-primary text-3xl">format_quote</span>
-              <p className="font-body-md italic text-on-surface">"{quote}"</p>
+              <div className="flex items-start justify-between gap-4">
+                <span className="material-symbols-outlined text-primary text-5xl group-hover:scale-110 transition-transform duration-300 shrink-0">format_quote</span>
+                <span className="text-primary/20 text-xs font-eyebrow-mono">0{idx + 1}</span>
+              </div>
+              <p className="font-body-md italic text-on-surface leading-relaxed">"{quote}"</p>
             </motion.div>
           ))}
         </motion.div>
@@ -368,7 +371,7 @@ export default function Home() {
 
       <div className="max-w-max_width mx-auto px-gutter"><div className="hairline-subtle w-full border-b"></div></div>
 
-      {/* Value Pillars Grid */}
+      {/* What Changes - Before/After Transformation */}
       <section className="max-w-max_width mx-auto px-gutter py-section_v_padding flex flex-col gap-stack_lg relative overflow-hidden">
         {/* Parallax background element */}
         <motion.div 
@@ -391,35 +394,55 @@ export default function Home() {
         </div>
         
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mt-4 relative z-10"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-stack_lg relative z-10 mt-4"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           variants={staggerContainerVariants}
         >
           {[
-            { num: "01", title: "The right system, chosen once", desc: "Not re-evaluated every 18 months because the last choice didn't fit." },
-            { num: "02", title: "Revenue numbers that hold up", desc: "In the board deck, the ledger, and the audit file — the same number, every time." },
-            { num: "03", title: "A close without the fire drill", desc: "The process breaks in the same place every quarter — until it's actually redesigned." },
-            { num: "04", title: "One number everyone trusts", desc: "The board, the warehouse, and the auditor, finally looking at the same figure." }
+            { before: "System re-evaluated every 18 months", after: "The right system, chosen once", icon: "settings" },
+            { before: "Board deck ≠ Internal numbers ≠ Audit file", after: "Revenue numbers that hold up everywhere", icon: "check_circle" },
+            { before: "Month-end fire drill every quarter", after: "A close without the panic", icon: "trending_up" },
+            { before: "Three places to find the same number", after: "One number everyone trusts", icon: "people" }
           ].map((item, idx) => (
             <motion.div 
               key={idx}
-              className="grid-hover-effect flex flex-col gap-stack_md p-stack_md border border-outline-variant bg-surface-container-low hover:shadow-lg hover:border-primary transition-all duration-300"
+              className="relative"
               variants={cardRevealVariants}
               whileHover="hover"
             >
-              <p className="font-eyebrow-mono text-primary">{item.num}</p>
-              <h3 className="font-headline-md text-2xl">{item.title}</h3>
-              <p className="font-body-md text-on-surface-variant">{item.desc}</p>
+              <div className="grid grid-cols-[1fr_auto_1fr] gap-stack_sm items-center h-full">
+                {/* BEFORE */}
+                <div className="bg-surface-container-low/50 p-stack_md border border-outline-variant/50 rounded-sm">
+                  <p className="font-eyebrow-mono text-label-sm uppercase text-outline mb-2">Before</p>
+                  <p className="font-body-md text-on-surface-variant">{item.before}</p>
+                </div>
+                
+                {/* Arrow/Flow */}
+                <div className="flex flex-col items-center gap-2">
+                  <motion.div 
+                    className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <span className="material-symbols-outlined text-primary text-xl">arrow_forward</span>
+                  </motion.div>
+                </div>
+                
+                {/* AFTER */}
+                <div className="bg-primary/10 p-stack_md border border-primary/30 rounded-sm relative">
+                  <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full"></div>
+                  <p className="font-eyebrow-mono text-label-sm uppercase text-primary mb-2 flex items-center gap-2">
+                    <span className="material-symbols-outlined text-sm">done</span>
+                    After
+                  </p>
+                  <p className="font-body-md font-medium text-on-surface">{item.after}</p>
+                </div>
+              </div>
             </motion.div>
           ))}
         </motion.div>
-        <div className="mt-4">
-          <Link to="/services" className="btn-swipe border border-outline text-on-surface px-stack_lg py-4 font-label-sm text-label-sm uppercase hover:border-primary hover:text-primary inline-block">
-            <span>Our Approach →</span>
-          </Link>
-        </div>
       </section>
 
       {/* Approach Summary (Timeline) */}
