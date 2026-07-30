@@ -73,9 +73,9 @@ export default function Layout({ children }) {
                 <Link
                   key={link.to}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`font-body-md text-body-md uppercase tracking-wider transition-colors duration-300 pb-1 ${
+                  className={`font-body-md text-body-md uppercase tracking-wider transition-colors duration-300 pb-1 relative ${
                     isActive
-                      ? 'text-primary font-bold border-b border-primary'
+                      ? 'text-primary font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-primary'
                       : 'text-on-surface-variant hover:text-primary'
                   }`}
                   to={link.to}
@@ -101,7 +101,7 @@ export default function Layout({ children }) {
 
           <Link 
             to="/contact" 
-            className="btn-swipe hidden md:inline-flex bg-iron-ink text-surface-container-low px-gutter py-stack_sm font-label-sm text-label-sm uppercase hover:text-white active:scale-95"
+            className="btn-swipe btn-swipe-dark hidden md:inline-flex bg-iron-ink text-surface-container-low px-gutter py-stack_sm font-label-sm text-label-sm uppercase active:scale-95"
           >
             <span className="relative z-10">Get in Touch</span>
           </Link>
@@ -133,7 +133,7 @@ export default function Layout({ children }) {
 
             <Link
               to="/contact"
-              className="btn-swipe inline-flex justify-center bg-iron-ink text-surface-container-low px-gutter py-stack_sm font-label-sm text-label-sm uppercase hover:text-white active:scale-95 mt-2"
+              className="btn-swipe btn-swipe-dark inline-flex justify-center bg-iron-ink text-surface-container-low px-gutter py-stack_sm font-label-sm text-label-sm uppercase active:scale-95 mt-2"
             >
               <span className="relative z-10">Get in Touch</span>
             </Link>
@@ -179,8 +179,8 @@ export default function Layout({ children }) {
 
           <div className="w-full h-px bg-tertiary/40"></div>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-stack_md text-surface-variant/60">
-            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-xs">© 2026 Aurvium Finance Architecture</p>
-            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-xs">aurvium.com</p>
+            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-xs">© 2026 Aurvium. All rights reserved.</p>
+            <a href="/contact" className="font-eyebrow-mono text-eyebrow-mono uppercase text-xs hover:text-tertiary-fixed transition-colors">Privacy Policy</a>
           </div>
         </div>
       </footer>
