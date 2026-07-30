@@ -238,56 +238,6 @@ export default function Home() {
       </section>
 
 
-      {/* Recognition Section (Sound Familiar?) */}
-      <section className="bg-surface-container-low py-section_v_padding relative overflow-hidden">
-        {/* Parallax background element */}
-        <motion.div 
-          className="absolute -left-40 top-1/4 w-80 h-80 rounded-full bg-primary/3 blur-3xl pointer-events-none"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-        />
-        
-        <div className="max-w-max_width mx-auto px-gutter grid md:grid-cols-2 gap-stack_lg relative z-10">
-          <motion.div 
-            className="flex flex-col gap-stack_md"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={scrollRevealVariants}
-          >
-            <div className="flex items-center gap-stack_sm">
-              <span className="gold-dash"></span>
-              <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">Sound Familiar?</p>
-            </div>
-            <h2 className="font-headline-md text-headline-md">What finance looks like once it's outgrown the systems that built it.</h2>
-            <p className="font-body-md text-on-surface-variant">
-              The usual response is to blame the closest thing — "the controller needs to work harder," "we need better software," "we need another analyst." None of those are wrong exactly. They're just aimed at the wrong layer.
-            </p>
-            <p className="font-body-md text-on-surface-variant font-medium mt-2">
-              These aren't separate problems. They're symptoms of one design problem — a finance system nobody ever built on purpose.
-            </p>
-          </motion.div>
-          <motion.ul 
-            className="flex flex-col gap-stack_md border-l border-outline-variant pl-gutter"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={staggerContainerVariants}
-          >
-            {["Close takes longer every quarter, not shorter.", "The board deck number and the internal number don't quite match — again.", "Nobody can state your MRR definition without checking three places first.", "The ERP conversation keeps coming up, and keeps getting tabled.", "Revenue recognition still happens by hand, in a spreadsheet, right before the close."].map((text, idx) => (
-              <motion.li key={idx} className="flex items-start gap-stack_md" variants={cardRevealVariants}>
-                <span className="gold-dash mt-3 shrink-0"></span>
-                <p className="font-body-md text-on-surface">{text}</p>
-              </motion.li>
-            ))}
-          </motion.ul>
-        </div>
-      </section>
-
-      <div className="max-w-max_width mx-auto px-gutter"><div className="hairline-subtle w-full border-b"></div></div>
-
       {/* Investigation Teaser Section */}
       <section className="max-w-max_width mx-auto px-gutter py-section_v_padding relative">
         <motion.div 
@@ -326,8 +276,74 @@ export default function Home() {
 
       <div className="max-w-max_width mx-auto px-gutter"><div className="hairline-subtle w-full border-b"></div></div>
 
-      {/* Transformations - Before & After */}
-      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding flex flex-col gap-stack_lg relative overflow-hidden">
+      {/* "Typical Situations" - Left-Aligned Quote List */}
+      <section className="bg-surface-container-low py-12 md:py-16 relative overflow-hidden">
+        {/* Parallax background element */}
+        <motion.div 
+          className="absolute -left-40 top-1/4 w-80 h-80 rounded-full bg-primary/3 blur-3xl pointer-events-none"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+        />
+        
+        <div className="max-w-max_width mx-auto px-gutter relative z-10">
+          <motion.div 
+            className="flex flex-col gap-stack_sm mb-stack_lg"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={scrollRevealVariants}
+          >
+            <div className="flex items-center gap-stack_sm">
+              <span className="gold-dash"></span>
+              <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">Typical Situations</p>
+            </div>
+            <h2 className="font-headline-md text-headline-md max-w-3xl">The kind of call we usually get.</h2>
+          </motion.div>
+
+          {/* Clean, minimal quote list with no boxes */}
+          <div className="flex flex-col gap-stack_md max-w-4xl">
+            {[
+              "We're planning an ERP move and want to get the design right before we build.",
+              "The board deck doesn't reconcile with our internal numbers.",
+              "Revenue recognition has become a manual process every month-end.",
+              "We're heading into due diligence and the numbers need to hold up.",
+              "Pricing changed, and billing is more complicated than the system was built for.",
+              "Reporting worked fine until it didn't — now nothing scales."
+            ].map((text, idx) => (
+              <motion.div 
+                key={idx}
+                className="group flex items-start gap-stack_md cursor-default"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ x: 8 }}
+              >
+                {/* Gold accent dash on left that animates in */}
+                <motion.span 
+                  className="shrink-0 mt-3 h-[2px] w-6 bg-primary origin-left group-hover:w-8 transition-all duration-300 ease-out"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.15 + idx * 0.1 }}
+                />
+
+                {/* Typography-focused quote text */}
+                <p className="font-body-md text-on-surface italic group-hover:text-primary transition-colors duration-300">
+                  "{text}"
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-max_width mx-auto px-gutter"><div className="hairline-subtle w-full border-b"></div></div>
+
+      {/* "What Changes" - Numbered Statement Grid */}
+      <section className="max-w-max_width mx-auto px-gutter py-12 md:py-16 relative overflow-hidden">
         {/* Parallax background */}
         <motion.div 
           className="absolute -right-40 -bottom-40 w-96 h-96 rounded-full bg-primary/3 blur-3xl pointer-events-none"
@@ -337,95 +353,89 @@ export default function Home() {
           viewport={{ once: true, margin: "-100px" }}
         />
         
-        <div className="relative z-10">
-          <div className="flex items-center gap-stack_sm">
-            <span className="gold-dash"></span>
-            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">The Transformation</p>
-          </div>
-          <h2 className="font-headline-md text-headline-md">From the calls we get to what changes.</h2>
-        </div>
-        
-        {/* Full-width transformation blocks */}
-        <motion.div 
-          className="flex flex-col gap-stack_md relative z-10"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={staggerContainerVariants}
-        >
-          {[
-            { 
-              problem: "We're planning an ERP move and want to get the design right before we build.", 
-              solution: "The right system, chosen once" 
-            },
-            { 
-              problem: "The board deck doesn't reconcile with our internal numbers.", 
-              solution: "Revenue numbers that hold up everywhere" 
-            },
-            { 
-              problem: "Revenue recognition has become a manual process every month-end.", 
-              solution: "A close without the fire drill" 
-            },
-            { 
-              problem: "We're heading into due diligence and the numbers need to hold up.", 
-              solution: "One number everyone trusts" 
-            },
-            { 
-              problem: "Pricing changed, and billing is more complicated than the system was built for.", 
-              solution: "Systems that scale with your complexity" 
-            },
-            { 
-              problem: "Reporting worked fine until it didn't — now nothing scales.", 
-              solution: "Reporting that grows with your needs" 
-            }
-          ].map((item, idx) => (
-            <motion.div 
-              key={idx}
-              className="group"
-              variants={cardRevealVariants}
-              whileHover={{ scale: 1.01 }}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-[1fr_60px_1fr] gap-stack_lg items-center md:gap-0">
-                {/* BEFORE - Problem */}
-                <div className="md:pr-stack_lg py-stack_lg md:border-r border-outline-variant/30 group-hover:border-outline-variant transition-colors duration-300">
-                  <p className="font-eyebrow-mono text-label-sm uppercase text-outline mb-3 tracking-widest">Problem</p>
-                  <p className="font-body-lg text-on-surface-variant italic leading-relaxed">"{item.problem}"</p>
-                </div>
-                
-                {/* Arrow/Connector */}
-                <div className="hidden md:flex flex-col items-center justify-center gap-2">
-                  <motion.div 
-                    className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <span className="material-symbols-outlined text-primary text-xl">arrow_forward</span>
-                  </motion.div>
+        <div className="relative z-10 flex flex-col gap-stack_lg">
+          {/* Header */}
+          <motion.div 
+            className="flex flex-col gap-stack_sm"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={scrollRevealVariants}
+          >
+            <div className="flex items-center gap-stack_sm">
+              <span className="gold-dash"></span>
+              <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">What Changes</p>
+            </div>
+            <h2 className="font-headline-md text-headline-md">What becomes permanently easier.</h2>
+            <p className="font-body-md text-on-surface-variant max-w-2xl">
+              Not what we do — what's different afterward.
+            </p>
+          </motion.div>
+          
+          {/* 2-Column Grid on Desktop, Stacked on Mobile */}
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 gap-x-stack_lg gap-y-stack_lg"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainerVariants}
+          >
+            {[
+              {
+                num: "01",
+                title: "The right system, chosen once",
+                desc: "Not re-evaluated every 18 months because the last choice didn't fit."
+              },
+              {
+                num: "02",
+                title: "Revenue numbers that hold up",
+                desc: "In the board deck, the ledger, and the audit file — the same number, every time."
+              },
+              {
+                num: "03",
+                title: "A close without the fire drill",
+                desc: "The process breaks in the same place every quarter — until it's actually redesigned."
+              },
+              {
+                num: "04",
+                title: "One number everyone trusts",
+                desc: "The board, the warehouse, and the auditor, finally looking at the same figure."
+              }
+            ].map((item, idx) => (
+              <motion.div 
+                key={idx}
+                className="group relative flex flex-col justify-between pb-6 border-b border-outline-variant/30 hover:border-transparent transition-colors duration-300"
+                variants={cardRevealVariants}
+              >
+                <div>
+                  {/* Bold number in gold that scales on hover */}
+                  <div className="overflow-hidden inline-block mb-2">
+                    <motion.span 
+                      className="font-eyebrow-mono text-3xl md:text-4xl font-bold text-primary block tracking-tight origin-left"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                    >
+                      {item.num}
+                    </motion.span>
+                  </div>
+
+                  {/* Benefit statement in strong typography */}
+                  <h3 className="font-headline-sm md:text-headline-sm text-on-surface font-medium mb-2 group-hover:text-primary transition-colors duration-300">
+                    {item.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="font-body-md text-on-surface-variant leading-relaxed">
+                    {item.desc}
+                  </p>
                 </div>
 
-                {/* Mobile Arrow */}
-                <div className="md:hidden flex justify-center">
-                  <motion.div 
-                    className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center rotate-90"
-                    animate={{ y: [0, 4, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <span className="material-symbols-outlined text-primary text-lg">arrow_forward</span>
-                  </motion.div>
-                </div>
-                
-                {/* AFTER - Solution */}
-                <div className="md:pl-stack_lg py-stack_lg border-l-4 border-primary md:border-l-0">
-                  <p className="font-eyebrow-mono text-label-sm uppercase text-primary mb-3 tracking-widest flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">check_circle</span>
-                    Solution
-                  </p>
-                  <p className="font-headline-sm md:text-headline-md text-on-surface font-medium">{item.solution}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                {/* Animated gold underline appears on hover */}
+                <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-500 ease-out" />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </section>
 
       {/* Approach Summary (Timeline) */}
