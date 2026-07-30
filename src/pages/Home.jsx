@@ -326,9 +326,9 @@ export default function Home() {
 
       <div className="max-w-max_width mx-auto px-gutter"><div className="hairline-subtle w-full border-b"></div></div>
 
-      {/* Typical Situations (Quotes) */}
+      {/* Transformations - Before & After */}
       <section className="max-w-max_width mx-auto px-gutter py-section_v_padding flex flex-col gap-stack_lg relative overflow-hidden">
-        {/* Parallax background element */}
+        {/* Parallax background */}
         <motion.div 
           className="absolute -right-40 -bottom-40 w-96 h-96 rounded-full bg-primary/3 blur-3xl pointer-events-none"
           initial={{ opacity: 0 }}
@@ -340,104 +340,87 @@ export default function Home() {
         <div className="relative z-10">
           <div className="flex items-center gap-stack_sm">
             <span className="gold-dash"></span>
-            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">Typical Situations</p>
+            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">The Transformation</p>
           </div>
-          <h2 className="font-headline-md text-headline-md mb-2">The kind of call we usually get.</h2>
+          <h2 className="font-headline-md text-headline-md">From the calls we get to what changes.</h2>
         </div>
         
+        {/* Full-width transformation blocks */}
         <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-stack_lg relative z-10"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={staggerContainerVariants}
-        >
-          {["We're planning an ERP move and want to get the design right before we build.", "The board deck doesn't reconcile with our internal numbers.", "Revenue recognition has become a manual process every month-end.", "We're heading into due diligence and the numbers need to hold up.", "Pricing changed, and billing is more complicated than the system was built for.", "Reporting worked fine until it didn't — now nothing scales."].map((quote, idx) => (
-            <motion.div 
-              key={idx}
-              className="p-stack_lg border-l-4 border-primary bg-surface-container-low/50 backdrop-blur-sm flex flex-col gap-stack_md hover:bg-surface-container-low hover:shadow-lg transition-all duration-300 group"
-              variants={cardRevealVariants}
-              whileHover="hover"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <span className="material-symbols-outlined text-primary text-5xl group-hover:scale-110 transition-transform duration-300 shrink-0">format_quote</span>
-                <span className="text-primary/20 text-xs font-eyebrow-mono">0{idx + 1}</span>
-              </div>
-              <p className="font-body-md italic text-on-surface leading-relaxed">"{quote}"</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      <div className="max-w-max_width mx-auto px-gutter"><div className="hairline-subtle w-full border-b"></div></div>
-
-      {/* What Changes - Before/After Transformation */}
-      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding flex flex-col gap-stack_lg relative overflow-hidden">
-        {/* Parallax background element */}
-        <motion.div 
-          className="absolute -left-40 -top-40 w-96 h-96 rounded-full bg-primary/3 blur-3xl pointer-events-none"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-        />
-        
-        <div className="relative z-10">
-          <div className="flex items-center gap-stack_sm">
-            <span className="gold-dash"></span>
-            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">What Changes</p>
-          </div>
-          <div>
-            <h2 className="font-headline-md text-headline-md mb-4">What becomes permanently easier.</h2>
-            <p className="font-body-lg text-on-surface-variant">Not what we do — what's different afterward.</p>
-          </div>
-        </div>
-        
-        <motion.div 
-          className="grid grid-cols-1 lg:grid-cols-2 gap-stack_lg relative z-10 mt-4"
+          className="flex flex-col gap-stack_md relative z-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           variants={staggerContainerVariants}
         >
           {[
-            { before: "System re-evaluated every 18 months", after: "The right system, chosen once", icon: "settings" },
-            { before: "Board deck ≠ Internal numbers ≠ Audit file", after: "Revenue numbers that hold up everywhere", icon: "check_circle" },
-            { before: "Month-end fire drill every quarter", after: "A close without the panic", icon: "trending_up" },
-            { before: "Three places to find the same number", after: "One number everyone trusts", icon: "people" }
+            { 
+              problem: "We're planning an ERP move and want to get the design right before we build.", 
+              solution: "The right system, chosen once" 
+            },
+            { 
+              problem: "The board deck doesn't reconcile with our internal numbers.", 
+              solution: "Revenue numbers that hold up everywhere" 
+            },
+            { 
+              problem: "Revenue recognition has become a manual process every month-end.", 
+              solution: "A close without the fire drill" 
+            },
+            { 
+              problem: "We're heading into due diligence and the numbers need to hold up.", 
+              solution: "One number everyone trusts" 
+            },
+            { 
+              problem: "Pricing changed, and billing is more complicated than the system was built for.", 
+              solution: "Systems that scale with your complexity" 
+            },
+            { 
+              problem: "Reporting worked fine until it didn't — now nothing scales.", 
+              solution: "Reporting that grows with your needs" 
+            }
           ].map((item, idx) => (
             <motion.div 
               key={idx}
-              className="relative"
+              className="group"
               variants={cardRevealVariants}
-              whileHover="hover"
+              whileHover={{ scale: 1.01 }}
             >
-              <div className="grid grid-cols-[1fr_auto_1fr] gap-stack_sm items-center h-full">
-                {/* BEFORE */}
-                <div className="bg-surface-container-low/50 p-stack_md border border-outline-variant/50 rounded-sm">
-                  <p className="font-eyebrow-mono text-label-sm uppercase text-outline mb-2">Before</p>
-                  <p className="font-body-md text-on-surface-variant">{item.before}</p>
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_60px_1fr] gap-stack_lg items-center md:gap-0">
+                {/* BEFORE - Problem */}
+                <div className="md:pr-stack_lg py-stack_lg md:border-r border-outline-variant/30 group-hover:border-outline-variant transition-colors duration-300">
+                  <p className="font-eyebrow-mono text-label-sm uppercase text-outline mb-3 tracking-widest">Problem</p>
+                  <p className="font-body-lg text-on-surface-variant italic leading-relaxed">"{item.problem}"</p>
                 </div>
                 
-                {/* Arrow/Flow */}
-                <div className="flex flex-col items-center gap-2">
+                {/* Arrow/Connector */}
+                <div className="hidden md:flex flex-col items-center justify-center gap-2">
                   <motion.div 
-                    className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center"
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
+                    className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   >
                     <span className="material-symbols-outlined text-primary text-xl">arrow_forward</span>
                   </motion.div>
                 </div>
+
+                {/* Mobile Arrow */}
+                <div className="md:hidden flex justify-center">
+                  <motion.div 
+                    className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center rotate-90"
+                    animate={{ y: [0, 4, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <span className="material-symbols-outlined text-primary text-lg">arrow_forward</span>
+                  </motion.div>
+                </div>
                 
-                {/* AFTER */}
-                <div className="bg-primary/10 p-stack_md border border-primary/30 rounded-sm relative">
-                  <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full"></div>
-                  <p className="font-eyebrow-mono text-label-sm uppercase text-primary mb-2 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-sm">done</span>
-                    After
+                {/* AFTER - Solution */}
+                <div className="md:pl-stack_lg py-stack_lg border-l-4 border-primary md:border-l-0">
+                  <p className="font-eyebrow-mono text-label-sm uppercase text-primary mb-3 tracking-widest flex items-center gap-2">
+                    <span className="material-symbols-outlined text-lg">check_circle</span>
+                    Solution
                   </p>
-                  <p className="font-body-md font-medium text-on-surface">{item.after}</p>
+                  <p className="font-headline-sm md:text-headline-md text-on-surface font-medium">{item.solution}</p>
                 </div>
               </div>
             </motion.div>
