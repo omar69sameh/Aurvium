@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Seo from '../components/Seo';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -24,6 +25,11 @@ export default function About() {
       transition={{ duration: 0.4 }}
       className="page-transition"
     >
+      <Seo
+        title="About"
+        description="Aurvium is an independent finance architecture studio. Most finance problems don't start in the finance team — they start years earlier, in systems no one designed on purpose."
+        path="/about"
+      />
       <section className="py-section_v_padding flex flex-col items-center text-center max-w-max_width mx-auto px-gutter">
         <div className="w-full flex flex-col items-center">
           <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-on-surface-variant mb-stack_md">

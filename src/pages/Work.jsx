@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Seo from '../components/Seo';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -24,6 +25,11 @@ export default function Work() {
       transition={{ duration: 0.4 }}
       className="page-transition"
     >
+      <Seo
+        title="Notes"
+        description="The thinking, not the war stories — first-principles notes on the architecture of finance systems."
+        path="/work"
+      />
       <section className="py-section_v_padding border-b border-outline-variant max-w-max_width mx-auto px-gutter">
         <div className="flex flex-col gap-stack_md">
           <div className="flex items-center gap-stack_sm">

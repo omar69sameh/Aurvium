@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import Icon from './Icon';
 
 export default function Layout({ children }) {
   const location = useLocation();
   const [showNav, setShowNav] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
 
   const navLinks = [
     { to: '/', label: 'Home' },
@@ -21,26 +22,35 @@ export default function Layout({ children }) {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  // Hide nav on scroll down, show on scroll up
+  // Hide nav on scroll down, show on scroll up.
+  // Registered once; last position is held in a ref and reads are throttled to
+  // one per animation frame so the handler never thrashes.
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+
+    const update = () => {
       const currentScrollY = window.scrollY;
-      
-      // Hide if scrolling down and beyond navbar height
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
         setShowNav(false);
-      } 
-      // Show if scrolling up
-      else if (currentScrollY < lastScrollY) {
+      } else if (currentScrollY < lastScrollY.current) {
         setShowNav(true);
       }
 
-      setLastScrollY(currentScrollY);
+      lastScrollY.current = currentScrollY;
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   return (
     <>
@@ -94,9 +104,7 @@ export default function Layout({ children }) {
             aria-controls="mobile-navigation"
             onClick={() => setMobileMenuOpen((open) => !open)}
           >
-            <span className="material-symbols-outlined" aria-hidden="true">
-              {mobileMenuOpen ? 'close' : 'menu'}
-            </span>
+            <Icon name={mobileMenuOpen ? 'close' : 'menu'} size={24} />
           </button>
 
           <Link 
@@ -180,7 +188,7 @@ export default function Layout({ children }) {
           <div className="w-full h-px bg-tertiary/40"></div>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-stack_md text-surface-variant/60">
             <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-xs">© 2026 Aurvium. All rights reserved.</p>
-            <a href="/contact" className="font-eyebrow-mono text-eyebrow-mono uppercase text-xs hover:text-tertiary-fixed transition-colors">Privacy Policy</a>
+            <Link to="/privacy" className="font-eyebrow-mono text-eyebrow-mono uppercase text-xs hover:text-tertiary-fixed transition-colors">Privacy Policy</Link>
           </div>
         </div>
       </footer>

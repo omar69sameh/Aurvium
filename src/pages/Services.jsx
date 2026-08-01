@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Icon from '../components/Icon';
+import Seo from '../components/Seo';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -24,6 +26,11 @@ export default function Services() {
       transition={{ duration: 0.4 }}
       className="page-transition"
     >
+      <Seo
+        title="Services"
+        description="What changes once your finance systems are fixed — from ERP architecture and revenue recognition to MRR/ARR reporting that every system agrees on."
+        path="/services"
+      />
       {/* Hero Section */}
       <section className="max-w-max_width mx-auto px-gutter py-section_v_padding">
         <div className="flex flex-col gap-stack_md">
@@ -54,15 +61,15 @@ export default function Services() {
                 <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-tertiary mb-2 block">You need this if</span>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">You're choosing between finance/billing tools and don't have someone to vet them properly</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">Nobody can say with confidence what your current setup can and can't handle</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">You're planning an ERP move and want a second opinion before committing</span>
                   </li>
                 </ul>
@@ -80,15 +87,15 @@ export default function Services() {
                 <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-tertiary mb-2 block">You need this if</span>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">Recognition is still a manual spreadsheet exercise every close</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">Auditors have flagged your revenue schedule as a risk area</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">You're introducing usage-based or multi-element contracts</span>
                   </li>
                 </ul>
@@ -106,15 +113,15 @@ export default function Services() {
                 <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-tertiary mb-2 block">You need this if</span>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">Stripe and your ledger disagree and nobody's sure which one is right</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">Collections, AR aging, or billing exceptions are handled by memory, not process</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">Every close involves the same manual fire drill</span>
                   </li>
                 </ul>
@@ -132,15 +139,15 @@ export default function Services() {
                 <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-tertiary mb-2 block">You need this if</span>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">Board reporting and finance's internal numbers don't quite match</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">Churn and expansion analysis gets rebuilt by hand every quarter</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_small</span>
+                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
                     <span className="text-on-surface-variant font-data-table text-data-table">Nobody can explain a metric's exact definition on demand</span>
                   </li>
                 </ul>

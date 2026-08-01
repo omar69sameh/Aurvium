@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Seo from '../components/Seo';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -36,6 +37,11 @@ export default function Approach() {
       transition={{ duration: 0.4 }}
       className="page-transition"
     >
+      <Seo
+        title="Approach"
+        description="A defined engagement with a defined outcome: discovery, design, and getting it live — not a retainer, not a subscription."
+        path="/approach"
+      />
       <section className="max-w-max_width mx-auto px-gutter pt-24 pb-section_v_padding">
         <div className="max-w-3xl">
           <div className="gold-dash"></div>

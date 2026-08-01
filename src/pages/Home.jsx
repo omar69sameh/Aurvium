@@ -1,81 +1,12 @@
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useTypewriter } from '../hooks/useTypewriter';
+import Seo from '../components/Seo';
+import ChannelRule from '../components/ChannelRule';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
   in: { opacity: 1, y: 0 },
   out: { opacity: 0, y: -20 }
-};
-
-const sectionReveal = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-50px" },
-  transition: { duration: 0.6, ease: "easeOut" }
-};
-
-// Hero animations
-const heroContainerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
-    }
-  }
-};
-
-const heroItemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-  }
-};
-
-const floatingDashVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-  },
-  float: {
-    y: [0, -8, 0],
-    transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
-  }
-};
-
-const lineVariants = {
-  hidden: { scaleX: 0 },
-  visible: {
-    scaleX: 1,
-    transition: { duration: 1, delay: 0.8, ease: "easeOut" }
-  }
-};
-
-const buttonContainerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 1,
-    }
-  }
-};
-
-const buttonVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
-  }
 };
 
 // Scroll-triggered animations
@@ -112,47 +43,6 @@ const cardRevealVariants = {
   }
 };
 
-const parallaxVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { duration: 0.8 }
-  }
-};
-
-function TypewriterHeadline() {
-  const line2Text = "and everyone has a theory why.";
-  
-  const { displayedText: line2Display, isComplete: line2Complete } = useTypewriter(
-    line2Text, 
-    100, 
-    600
-  );
-
-  return (
-    <motion.h1 
-      className="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface leading-tight"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <span className="block">
-        The numbers don&apos;t agree,
-      </span>
-      <span className="block italic text-primary-container relative">
-        {line2Display}
-        {!line2Complete && (
-          <motion.span 
-            className="inline-block w-1 h-[1.2em] bg-primary ml-1 align-text-bottom"
-            animate={{ opacity: [1, 0] }}
-            transition={{ duration: 0.6, repeat: Infinity }}
-          />
-        )}
-      </span>
-    </motion.h1>
-  );
-}
-
 export default function Home() {
   return (
     <motion.div
@@ -163,78 +53,46 @@ export default function Home() {
       transition={{ duration: 0.4 }}
       className="page-transition"
     >
-      {/* Hero Section */}
-      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding flex flex-col items-start gap-stack_lg relative overflow-hidden">
-        {/* Animated background accent */}
-        <motion.div 
-          className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary/5 blur-3xl pointer-events-none"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        
-        <motion.div
-          className="relative z-10 flex flex-col gap-stack_sm"
-          variants={heroContainerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div className="flex items-center gap-stack_sm" variants={heroItemVariants}>
-            <motion.span 
-              className="gold-dash"
-              variants={floatingDashVariants}
-              animate="visible"
-              initial="hidden"
-              onAnimationComplete={() => {
-                // Start floating animation after initial reveal
-              }}
-            />
-            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-primary">For Finance Teams Outgrowing Their Systems</p>
-          </motion.div>
-          
-          <TypewriterHeadline />
-        </motion.div>
+      <Seo
+        title="Finance Architecture"
+        description="Aurvium designs the technical architecture that keeps your ERP, billing, and reporting engines speaking one language — so the board deck reconciles with the data warehouse."
+        path="/"
+      />
+      {/* Hero — document-style, ledger restraint */}
+      <section className="max-w-max_width mx-auto px-gutter pt-section_v_padding pb-stack_lg">
+        <div className="rise flex flex-col items-start gap-stack_lg">
+          <div className="flex items-center gap-stack_sm">
+            <span className="gold-dash"></span>
+            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-primary tracking-[0.28em]">For Finance Teams Outgrowing Their Systems</p>
+          </div>
 
-        <motion.p 
-          className="font-body-lg text-body-lg max-w-2xl text-on-surface-variant relative z-10"
-          variants={heroItemVariants}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
-          Trust decays when the board deck doesn't reconcile with the data warehouse. We design the technical architecture that ensures your ERP, billing, and reporting engines speak one language.
-        </motion.p>
+          <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface leading-[1.06] max-w-4xl">
+            <span className="block">The numbers don&apos;t agree,</span>
+            <span className="block italic text-stone">and everyone has a theory why.</span>
+          </h1>
 
-        <motion.div 
-          className="flex flex-wrap gap-stack_md mt-stack_sm relative z-10"
-          variants={buttonContainerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div variants={buttonVariants}>
-            <Link to="/work" className="btn-swipe bg-iron-ink text-surface-container-low px-stack_lg py-4 font-label-sm text-label-sm uppercase hover:text-white transition-all duration-300 block">
-              <span className="relative z-10">Read our thinking</span>
+          <p className="font-body-lg text-body-lg max-w-2xl text-on-surface-variant">
+            Trust decays when the board deck doesn&apos;t reconcile with the data warehouse. We design the technical architecture that ensures your ERP, billing, and reporting engines speak one language.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-x-stack_lg gap-y-stack_md mt-stack_sm">
+            <Link
+              to="/work"
+              className="bg-iron-ink text-surface-container-low px-stack_lg py-4 font-label-sm text-label-sm uppercase inline-block transition-opacity duration-300 hover:opacity-90 active:scale-[0.98]"
+            >
+              Read our thinking
             </Link>
-          </motion.div>
-          <motion.div variants={buttonVariants}>
-            <Link to="/services" className="btn-swipe border border-outline text-on-surface px-stack_lg py-4 font-label-sm text-label-sm uppercase hover:border-primary hover:text-primary transition-all duration-300 block">
-              <span className="relative z-10">What we do →</span>
+            <Link
+              to="/services"
+              className="group font-label-sm text-label-sm uppercase text-on-surface inline-flex items-center gap-2 pb-1 border-b border-outline hover:border-primary hover:text-primary transition-colors duration-300"
+            >
+              What we do
+              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        <motion.div 
-          className="w-full mt-stack_lg hairline-gold origin-left"
-          variants={lineVariants}
-          initial="hidden"
-          animate="visible"
-        />
+        <ChannelRule className="mt-section_v_padding" />
       </section>
 
 
@@ -326,106 +184,76 @@ export default function Home() {
 
       <div className="max-w-max_width mx-auto px-gutter"><div className="hairline-subtle w-full border-b"></div></div>
 
-      {/* Transformations - Before & After */}
-      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding flex flex-col gap-stack_lg relative overflow-hidden">
-        {/* Parallax background */}
-        <motion.div 
-          className="absolute -right-40 -bottom-40 w-96 h-96 rounded-full bg-primary/3 blur-3xl pointer-events-none"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-        />
-        
+      {/* Typical Situations — the calls we get */}
+      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding relative overflow-hidden">
         <div className="relative z-10">
           <div className="flex items-center gap-stack_sm">
             <span className="gold-dash"></span>
-            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">The Transformation</p>
+            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">Typical Situations</p>
           </div>
-          <h2 className="font-headline-md text-headline-md">From the calls we get to what changes.</h2>
+          <h2 className="font-headline-md text-headline-md">The kind of call we usually get.</h2>
         </div>
-        
-        {/* Full-width transformation blocks */}
-        <motion.div 
-          className="flex flex-col gap-stack_md relative z-10"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={staggerContainerVariants}
-        >
-          {[
-            { 
-              problem: "We're planning an ERP move and want to get the design right before we build.", 
-              solution: "The right system, chosen once" 
-            },
-            { 
-              problem: "The board deck doesn't reconcile with our internal numbers.", 
-              solution: "Revenue numbers that hold up everywhere" 
-            },
-            { 
-              problem: "Revenue recognition has become a manual process every month-end.", 
-              solution: "A close without the fire drill" 
-            },
-            { 
-              problem: "We're heading into due diligence and the numbers need to hold up.", 
-              solution: "One number everyone trusts" 
-            },
-            { 
-              problem: "Pricing changed, and billing is more complicated than the system was built for.", 
-              solution: "Systems that scale with your complexity" 
-            },
-            { 
-              problem: "Reporting worked fine until it didn't — now nothing scales.", 
-              solution: "Reporting that grows with your needs" 
-            }
-          ].map((item, idx) => (
-            <motion.div 
-              key={idx}
-              className="group"
-              variants={cardRevealVariants}
-              whileHover={{ scale: 1.01 }}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-[1fr_60px_1fr] gap-stack_lg items-center md:gap-0">
-                {/* BEFORE - Problem */}
-                <div className="md:pr-stack_lg py-stack_lg md:border-r border-outline-variant/30 group-hover:border-outline-variant transition-colors duration-300">
-                  <p className="font-eyebrow-mono text-label-sm uppercase text-outline mb-3 tracking-widest">Problem</p>
-                  <p className="font-body-lg text-on-surface-variant italic leading-relaxed">"{item.problem}"</p>
-                </div>
-                
-                {/* Arrow/Connector */}
-                <div className="hidden md:flex flex-col items-center justify-center gap-2">
-                  <motion.div 
-                    className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <span className="material-symbols-outlined text-primary text-xl">arrow_forward</span>
-                  </motion.div>
-                </div>
 
-                {/* Mobile Arrow */}
-                <div className="md:hidden flex justify-center">
-                  <motion.div 
-                    className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center rotate-90"
-                    animate={{ y: [0, 4, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <span className="material-symbols-outlined text-primary text-lg">arrow_forward</span>
-                  </motion.div>
-                </div>
-                
-                {/* AFTER - Solution */}
-                <div className="md:pl-stack_lg py-stack_lg border-l-4 border-primary md:border-l-0">
-                  <p className="font-eyebrow-mono text-label-sm uppercase text-primary mb-3 tracking-widest flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">check_circle</span>
-                    Solution
-                  </p>
-                  <p className="font-headline-sm md:text-headline-md text-on-surface font-medium">{item.solution}</p>
-                </div>
-              </div>
-            </motion.div>
+        <ul className="mt-stack_lg border-t border-outline-variant/60 relative z-10">
+          {[
+            "We're planning an ERP move and want to get the design right before we build.",
+            "The board deck doesn't reconcile with our internal numbers.",
+            "Revenue recognition has become a manual process every month-end.",
+            "We're heading into due diligence and the numbers need to hold up.",
+            "Pricing changed, and billing is more complicated than the system was built for.",
+            "Reporting worked fine until it didn't — now nothing scales."
+          ].map((quote, idx) => (
+            <li
+              key={idx}
+              className="group flex items-baseline gap-stack_md md:gap-stack_lg py-stack_md md:py-8 border-b border-outline-variant/60 hover:pl-2 transition-[padding] duration-300"
+            >
+              <span className="font-eyebrow-mono text-label-sm text-primary/70 tabular-nums shrink-0">0{idx + 1}</span>
+              <p className="font-display-lg text-2xl md:text-3xl italic text-on-surface-variant group-hover:text-on-surface leading-snug transition-colors duration-300">
+                &ldquo;{quote}&rdquo;
+              </p>
+            </li>
           ))}
-        </motion.div>
+        </ul>
+      </section>
+
+      <div className="max-w-max_width mx-auto px-gutter"><div className="hairline-subtle w-full border-b"></div></div>
+
+      {/* What Changes — what's different afterward */}
+      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding relative overflow-hidden">
+        <div className="relative z-10 max-w-3xl">
+          <div className="flex items-center gap-stack_sm">
+            <span className="gold-dash"></span>
+            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">What Changes</p>
+          </div>
+          <h2 className="font-headline-md text-headline-md mb-3">What becomes permanently easier.</h2>
+          <p className="font-body-lg text-body-lg text-on-surface-variant">Not what we do — what&apos;s different afterward.</p>
+        </div>
+
+        <div className="mt-stack_lg grid md:grid-cols-2 gap-x-stack_lg relative z-10">
+          {[
+            { num: "01", title: "The right system, chosen once", body: "Not re-evaluated every 18 months because the last choice didn't fit." },
+            { num: "02", title: "Revenue numbers that hold up", body: "In the board deck, the ledger, and the audit file — the same number, every time." },
+            { num: "03", title: "A close without the fire drill", body: "The process breaks in the same place every quarter — until it's actually redesigned." },
+            { num: "04", title: "One number everyone trusts", body: "The board, the warehouse, and the auditor, finally looking at the same figure." }
+          ].map((item) => (
+            <div
+              key={item.num}
+              className="group flex gap-stack_md py-stack_lg border-b border-outline-variant/50"
+            >
+              <span className="font-display-lg text-5xl md:text-6xl leading-none text-primary/25 group-hover:text-primary/60 tabular-nums shrink-0 transition-colors duration-500">{item.num}</span>
+              <div className="flex flex-col gap-2 pt-1">
+                <h3 className="font-headline-md text-xl md:text-2xl text-on-surface">{item.title}</h3>
+                <p className="font-body-md text-on-surface-variant">{item.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-stack_lg relative z-10">
+          <Link to="/services" className="btn-swipe border border-outline text-on-surface px-stack_lg py-4 font-label-sm text-label-sm uppercase hover:border-primary hover:text-primary inline-block">
+            <span>See how, in detail →</span>
+          </Link>
+        </div>
       </section>
 
       {/* Approach Summary (Timeline) */}

@@ -31,6 +31,33 @@
   .hairline-gold {
     border-color: #b8922a;
   }
+
+  /* Channel divider — two hairlines split by a gap, echoing the mark */
+  .channel-rule {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .channel-rule .ln {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(184, 146, 42, 0.9) 25%, rgba(184, 146, 42, 0.9) 75%, transparent);
+    opacity: 0.55;
+  }
+  .channel-rule .gap {
+    flex: 0 0 auto;
+    width: 44px;
+  }
+
+  /* Safe entrance: CSS-driven so it always settles on the final (visible)
+     frame — content can never get stuck hidden the way JS opacity can. */
+  .rise {
+    animation: riseIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
   .hairline-subtle {
     border-color: #d1c5b0;
   }
@@ -40,10 +67,6 @@
     background-color: #b8922a;
     display: inline-block;
     margin-bottom: 8px;
-  }
-  .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
-    vertical-align: middle;
   }
   .transition-aurvium {
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
