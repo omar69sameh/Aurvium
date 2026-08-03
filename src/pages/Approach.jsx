@@ -31,7 +31,7 @@ export default function Approach() {
         description="A defined engagement with a defined outcome: discovery, design, and getting it live — not a retainer, not a subscription."
         path="/approach"
       />
-      <section className="max-w-max_width mx-auto px-gutter pt-24 pb-section_v_padding">
+      <section className="max-w-max_width mx-auto px-gutter pt-10 pb-section_v_padding">
         <div className="max-w-3xl">
           <div className="gold-dash"></div>
           <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-primary mb-4">Approach</p>
@@ -135,27 +135,49 @@ export default function Approach() {
             The same way an architect doesn&apos;t pour the concrete but remains responsible for the integrity of the design.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-outline-variant">
-          <motion.div className="grid-hover-effect p-stack_lg md:p-12 bg-surface-container border-b md:border-b-0 md:border-r border-outline-variant" {...sectionReveal}>
-            <h3 className="font-eyebrow-mono text-label-sm uppercase mb-8 text-primary font-bold tracking-widest">Aurvium owns</h3>
-            <ul className="space-y-5 font-body-md text-on-surface-variant">
-              <li>Understanding the problem</li>
-              <li>Designing the solution</li>
-              <li>Defining the architecture</li>
-              <li>Documenting the design</li>
-              <li>Validating that what&apos;s built matches the design</li>
+        {/* Owned vs. not — weighted split. Owned side carries the ink and the
+            gold markers; the other side stays deliberately recessive. */}
+        <div className="grid md:grid-cols-5 gap-stack_md items-start">
+          {/* Owned — the emphasized side */}
+          <div className="md:col-span-3 rounded-2xl bg-iron-ink text-surface-container-low p-stack_lg md:p-12">
+            <div className="flex items-center gap-stack_sm mb-stack_lg">
+              <span className="gold-dash bg-primary-fixed-dim mb-0"></span>
+              <h3 className="font-eyebrow-mono text-label-sm uppercase text-primary-fixed-dim font-bold tracking-widest">Aurvium owns</h3>
+            </div>
+            <ul className="divide-y divide-surface-variant/15">
+              {[
+                'Understanding the problem',
+                'Designing the solution',
+                'Defining the architecture',
+                'Documenting the design',
+                "Validating that what's built matches the design",
+              ].map((item) => (
+                <li key={item} className="flex items-baseline gap-stack_md py-stack_md first:pt-0 last:pb-0">
+                  <span className="w-4 h-px bg-primary-fixed-dim shrink-0 translate-y-[-4px]" aria-hidden="true"></span>
+                  <span className="font-headline-md text-lg md:text-xl text-surface-bright">{item}</span>
+                </li>
+              ))}
             </ul>
-          </motion.div>
-          <motion.div className="grid-hover-effect p-stack_lg md:p-12 bg-surface" {...sectionReveal} transition={{ delay: 0.1 }}>
-            <h3 className="font-eyebrow-mono text-label-sm uppercase mb-8 text-secondary font-bold tracking-widest">Not necessarily</h3>
-            <ul className="space-y-5 font-body-md text-on-surface-variant">
-              <li>ERP implementation</li>
-              <li>Software development</li>
-              <li>Custom integrations</li>
-              <li>Complex engineering work</li>
-              <li>Vendor delivery</li>
+          </div>
+
+          {/* Not necessarily — the recessive side */}
+          <div className="md:col-span-2 rounded-2xl border border-outline-variant/70 p-stack_lg md:p-10">
+            <h3 className="font-eyebrow-mono text-label-sm uppercase text-outline font-bold tracking-widest mb-stack_lg">Not necessarily</h3>
+            <ul className="divide-y divide-outline-variant/50">
+              {[
+                'ERP implementation',
+                'Software development',
+                'Custom integrations',
+                'Complex engineering work',
+                'Vendor delivery',
+              ].map((item) => (
+                <li key={item} className="flex items-baseline gap-stack_md py-stack_md first:pt-0 last:pb-0">
+                  <span className="w-4 h-px bg-outline-variant shrink-0 translate-y-[-4px]" aria-hidden="true"></span>
+                  <span className="font-body-md text-on-surface-variant">{item}</span>
+                </li>
+              ))}
             </ul>
-          </motion.div>
+          </div>
         </div>
         <p className="font-body-md text-on-surface-variant mt-8 max-w-[68ch] italic">
           Aurvium owns the design. It may participate in delivery, but it never promises to own every aspect of implementation. When specialist work is required, Aurvium remains the architectural authority — reviewing, guiding, and validating that the implementation reflects the intended design, whether the work is performed directly, by your team, or by an external partner.
@@ -207,7 +229,7 @@ export default function Approach() {
         </div>
       </section>
 
-      <section className="bg-iron-ink py-section_v_padding text-center">
+      <section className="band-fade-to-footer py-section_v_padding text-center">
         <motion.div className="max-w-max_width mx-auto px-gutter" {...sectionReveal}>
           <h2 className="font-display-lg text-headline-md md:text-display-lg text-surface-bright mb-6">Ready for an initial conversation?</h2>
           <p className="font-body-lg text-surface-variant/80 max-w-xl mx-auto mb-10">

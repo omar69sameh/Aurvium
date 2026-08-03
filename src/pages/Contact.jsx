@@ -108,7 +108,7 @@ export default function Contact() {
         description="Tell us where your finance system is breaking — reconciliation, recognition, or reporting. We reply within one business day."
         path="/contact"
       />
-      <section className="max-w-max_width mx-auto px-gutter pt-24 pb-section_v_padding flex flex-col items-start gap-stack_md">
+      <section className="max-w-max_width mx-auto px-gutter pt-10 pb-section_v_padding flex flex-col items-start gap-stack_md">
         <div className="flex items-center gap-4">
           <div className="w-[22px] h-[2px] bg-primary"></div>
           <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-primary tracking-[0.2em]">Diagnostic Intake</span>

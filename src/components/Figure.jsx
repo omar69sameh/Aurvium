@@ -171,18 +171,20 @@ function BreakpointChart() {
 
 const VARIANTS = { growth: GrowthChart, flow: FlowDiagram, converge: ConvergeChart, waterfall: WaterfallChart, cycletime: CycleTimeChart, revrec: RevRecChart, breakpoint: BreakpointChart };
 
-export default function Figure({ variant = 'growth', label = 'Figure', caption = 'Illustrative — sample data', className = '' }) {
+// `bare` drops the card chrome (border/shadow/rounding) for use inside a tile
+// that already provides it.
+export default function Figure({ variant = 'growth', label = 'Figure', caption = 'Illustrative — sample data', className = '', bare = false }) {
   const Chart = VARIANTS[variant] || GrowthChart;
   return (
-    <figure className={`figure ${className}`}>
-      <div className="flex items-center justify-between px-5 py-3 border-b border-outline-variant/60">
+    <figure className={`${bare ? '' : 'figure'} ${className}`}>
+      <div className={`flex items-center justify-between border-b border-outline-variant/60 ${bare ? 'pb-3' : 'px-5 py-3'}`}>
         <span className="font-eyebrow-mono text-label-sm uppercase tracking-widest text-primary">{label}</span>
         <span className="font-eyebrow-mono text-label-sm uppercase tracking-wider text-outline">Illustrative</span>
       </div>
-      <div className="p-6">
+      <div className={bare ? 'py-5' : 'p-6'}>
         <Chart />
       </div>
-      <figcaption className="px-5 pb-4 font-eyebrow-mono text-label-sm text-outline">{caption}</figcaption>
+      <figcaption className={`font-eyebrow-mono text-label-sm text-outline ${bare ? '' : 'px-5 pb-4'}`}>{caption}</figcaption>
     </figure>
   );
 }

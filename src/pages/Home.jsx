@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
@@ -9,6 +10,144 @@ const pageVariants = {
   in: { opacity: 1, y: 0 },
   out: { opacity: 0, y: -20 }
 };
+
+const OUTCOMES = [
+  {
+    num: '01',
+    title: 'The right system, chosen once',
+    body: "Not re-evaluated every 18 months because the last choice didn't fit.",
+    variant: 'flow',
+    figLabel: 'The architecture we leave behind',
+    figCap: 'Stripe → pipeline → ERP → reporting — illustrative',
+  },
+  {
+    num: '02',
+    title: 'Revenue numbers that hold up',
+    body: 'In the board deck, the ledger, and the audit file — the same number, every time.',
+    variant: 'waterfall',
+    figLabel: 'MRR bridge',
+    figCap: 'New + Expansion − Contraction − Churn → Net MRR — illustrative',
+  },
+  {
+    num: '03',
+    title: 'A close without the fire drill',
+    body: "The process breaks in the same place every quarter — until it's actually redesigned.",
+    variant: 'cycletime',
+    figLabel: 'Days to close',
+    figCap: 'Close cycle time, quarter over quarter — illustrative',
+  },
+  {
+    num: '04',
+    title: 'One number everyone trusts',
+    body: 'The board, the warehouse, and the auditor, finally looking at the same figure.',
+    variant: 'converge',
+    figLabel: 'Board deck vs. warehouse',
+    figCap: 'Two systems reconciling to one number — illustrative',
+  },
+];
+
+// Sticky showcase: outcomes scroll on the left, the matching chart stays pinned
+// on the right and swaps as each outcome reaches the middle of the viewport.
+// Defaults to the first chart, so the panel is never empty even if the
+// observer never fires.
+function WhatChangesShowcase() {
+  const [active, setActive] = useState(0);
+  const itemRefs = useRef([]);
+
+  useEffect(() => {
+    const nodes = itemRefs.current.filter(Boolean);
+    if (!nodes.length || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Number(entry.target.dataset.idx);
+            if (!Number.isNaN(idx)) setActive(idx);
+          }
+        });
+      },
+      // narrow band across the middle of the viewport
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+    );
+
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, []);
+
+  const current = OUTCOMES[active] || OUTCOMES[0];
+
+  return (
+    <div className="mt-stack_lg grid lg:grid-cols-2 gap-stack_lg lg:gap-16 relative z-10 lg:items-stretch">
+      {/* left: the outcomes */}
+      <ol>
+        {OUTCOMES.map((item, idx) => {
+          const isActive = idx === active;
+          return (
+            <li
+              key={item.num}
+              data-idx={idx}
+              ref={(el) => { itemRefs.current[idx] = el; }}
+              className="lg:min-h-[62vh] flex flex-col justify-center py-stack_lg border-b border-outline-variant/40 last:border-b-0"
+            >
+              <div className="flex items-baseline gap-stack_md">
+                <span
+                  className={`font-display-lg text-5xl md:text-6xl leading-none tabular-nums shrink-0 transition-colors duration-500 ${
+                    isActive ? 'text-primary' : 'text-primary/25'
+                  }`}
+                >
+                  {item.num}
+                </span>
+                <div className="flex flex-col gap-2">
+                  <h3
+                    className={`font-headline-md text-2xl md:text-3xl transition-colors duration-500 ${
+                      isActive ? 'text-on-surface' : 'text-on-surface/70'
+                    }`}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="font-body-md text-on-surface-variant max-w-[52ch]">{item.body}</p>
+                </div>
+              </div>
+
+              {/* mobile: chart sits with its own outcome (sticky needs height) */}
+              <Figure
+                variant={item.variant}
+                label={item.figLabel}
+                caption={item.figCap}
+                className="w-full mt-stack_lg lg:hidden"
+              />
+            </li>
+          );
+        })}
+      </ol>
+
+      {/* right: the pinned chart — column must span full row height so the
+          sticky child has room to travel */}
+      <div className="hidden lg:block h-full">
+        <div className="sticky top-28">
+          <Figure
+            key={current.variant}
+            variant={current.variant}
+            label={current.figLabel}
+            caption={current.figCap}
+            className="w-full"
+          />
+          <div className="mt-stack_md flex items-center gap-2" aria-hidden="true">
+            {OUTCOMES.map((o, idx) => (
+              <span
+                key={o.num}
+                className={`h-[2px] flex-1 rounded-full transition-colors duration-500 ${
+                  idx === active ? 'bg-primary' : 'bg-outline-variant'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
@@ -28,7 +167,7 @@ export default function Home() {
       {/* Hero — full-bleed, gradient ground, figure alongside */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 grid-overlay pointer-events-none" aria-hidden="true"></div>
-        <div className="max-w-max_width mx-auto px-gutter pt-section_v_padding pb-stack_lg relative">
+        <div className="max-w-max_width mx-auto px-gutter pt-10 pb-stack_lg relative">
           <div className="rise grid lg:grid-cols-[1.05fr_0.95fr] gap-stack_lg lg:gap-16 items-center">
             <div className="flex flex-col items-start gap-stack_lg">
               <div className="flex items-center gap-stack_sm">
@@ -163,8 +302,9 @@ export default function Home() {
 
       <div className="max-w-max_width mx-auto px-gutter"><div className="hairline-subtle w-full border-b"></div></div>
 
-      {/* What Changes — what's different afterward */}
-      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding relative overflow-hidden">
+      {/* What Changes — what's different afterward.
+          No overflow-hidden here: it would break the sticky chart panel. */}
+      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding relative">
         <div className="relative z-10 max-w-3xl">
           <div className="flex items-center gap-stack_sm">
             <span className="gold-dash"></span>
@@ -174,45 +314,7 @@ export default function Home() {
           <p className="font-body-lg text-body-lg text-on-surface-variant">Not what we do — what&apos;s different afterward.</p>
         </div>
 
-        <div className="mt-stack_lg flex flex-col gap-section_v_padding_mobile relative z-10">
-          {/* Row 1 — outcomes 01–02 beside the growth chart */}
-          <div className="grid lg:grid-cols-2 gap-stack_lg lg:gap-16 items-center">
-            <div className="flex flex-col">
-              {[
-                { num: "01", title: "The right system, chosen once", body: "Not re-evaluated every 18 months because the last choice didn't fit." },
-                { num: "02", title: "Revenue numbers that hold up", body: "In the board deck, the ledger, and the audit file — the same number, every time." }
-              ].map((item) => (
-                <div key={item.num} className="flex gap-stack_md py-stack_md border-b border-outline-variant/50">
-                  <span className="font-display-lg text-5xl md:text-6xl leading-none text-primary/25 tabular-nums shrink-0">{item.num}</span>
-                  <div className="flex flex-col gap-2 pt-1">
-                    <h3 className="font-headline-md text-xl md:text-2xl text-on-surface">{item.title}</h3>
-                    <p className="font-body-md text-on-surface-variant">{item.body}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Figure variant="growth" label="Reporting that scales" caption="Revenue that holds up as you grow — illustrative" className="w-full" />
-          </div>
-
-          {/* Row 2 — the MRR bridge beside outcomes 03–04 */}
-          <div className="grid lg:grid-cols-2 gap-stack_lg lg:gap-16 items-center">
-            <Figure variant="waterfall" label="MRR bridge" caption="New + Expansion − Contraction − Churn → Net MRR — illustrative" className="w-full lg:order-1" />
-            <div className="flex flex-col lg:order-2">
-              {[
-                { num: "03", title: "A close without the fire drill", body: "The process breaks in the same place every quarter — until it's actually redesigned." },
-                { num: "04", title: "One number everyone trusts", body: "The board, the warehouse, and the auditor, finally looking at the same figure." }
-              ].map((item) => (
-                <div key={item.num} className="flex gap-stack_md py-stack_md border-b border-outline-variant/50">
-                  <span className="font-display-lg text-5xl md:text-6xl leading-none text-primary/25 tabular-nums shrink-0">{item.num}</span>
-                  <div className="flex flex-col gap-2 pt-1">
-                    <h3 className="font-headline-md text-xl md:text-2xl text-on-surface">{item.title}</h3>
-                    <p className="font-body-md text-on-surface-variant">{item.body}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <WhatChangesShowcase />
 
         <div className="mt-stack_lg relative z-10">
           <Link to="/services" className="btn-pill btn-ghost">See how, in detail →</Link>
@@ -257,17 +359,17 @@ export default function Home() {
       </section>
 
       {/* Dark Principle Banner — full-bleed band */}
-      <section className="bg-iron-ink text-surface-container-low py-section_v_padding mt-section_v_padding_mobile">
+      <section className="band-darkest text-surface-container-low py-section_v_padding mt-section_v_padding_mobile">
         <div className="max-w-max_width mx-auto px-gutter flex flex-col items-center text-center gap-stack_lg">
           <span className="gold-dash bg-primary-fixed-dim"></span>
-          <h2 className="font-display-lg text-headline-md md:text-display-lg max-w-4xl text-surface-bright">
+          <h2 className="font-display-lg text-headline-md md:text-display-lg max-w-[68rem] text-surface-bright">
             &ldquo;We don&apos;t oversell. We deliver systems that work quietly and correctly — the way good infrastructure should.&rdquo;
           </h2>
         </div>
       </section>
 
       {/* Contact CTA — full-bleed dark band */}
-      <section className="bg-hero-dark text-surface-container-low py-section_v_padding">
+      <section className="band-fade-to-footer text-surface-container-low py-section_v_padding">
         <div className="max-w-max_width mx-auto px-gutter flex flex-col md:flex-row md:items-end md:justify-between gap-stack_lg">
           <div className="max-w-2xl flex flex-col gap-stack_md">
             <h2 className="font-headline-md text-headline-md text-surface-bright">Every finance system was designed. Even the accidental ones.</h2>

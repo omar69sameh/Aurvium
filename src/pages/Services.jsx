@@ -32,7 +32,7 @@ export default function Services() {
         path="/services"
       />
       {/* Hero Section */}
-      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding">
+      <section className="max-w-max_width mx-auto px-gutter pt-10 pb-section_v_padding">
         <div className="flex flex-col gap-stack_md">
           <div className="flex items-center">
             <span className="gold-dash"></span>
@@ -48,8 +48,8 @@ export default function Services() {
         </div>
       </section>
 
-      {/* What changes — each outcome paired with its picture, alternating */}
-      <section className="max-w-max_width mx-auto px-gutter pb-section_v_padding flex flex-col gap-section_v_padding_mobile">
+      {/* What changes — bento: each outcome self-contained, tile sizes vary */}
+      <section className="max-w-max_width mx-auto px-gutter pb-section_v_padding grid md:grid-cols-3 gap-stack_md items-stretch">
         {[
           {
             n: '01 / CHOICE', title: 'The right system, chosen once',
@@ -75,27 +75,46 @@ export default function Services() {
             variant: 'converge', figLabel: 'Board deck vs. warehouse', figCap: 'Two systems reconciling to one number — illustrative',
             needs: ["Board reporting and finance's internal numbers don't quite match", "Churn and expansion analysis gets rebuilt by hand every quarter", "Nobody can explain a metric's exact definition on demand"]
           }
-        ].map((p, idx) => (
-          <motion.div key={p.n} className="grid lg:grid-cols-2 gap-stack_lg lg:gap-16 items-center" {...sectionReveal}>
-            <div className={idx % 2 === 1 ? 'lg:order-2' : ''}>
-              <span className="font-label-sm text-label-sm text-outline mb-4 block">{p.n}</span>
-              <h3 className="font-headline-md text-headline-md mb-stack_md text-on-surface">{p.title}</h3>
-              <p className="text-on-surface-variant mb-stack_lg font-body-md max-w-lg">{p.desc}</p>
-              <div className="border-t border-outline-variant pt-stack_md max-w-lg">
-                <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-tertiary mb-2 block">You need this if</span>
-                <ul className="space-y-2">
-                  {p.needs.map((need) => (
-                    <li key={need} className="flex items-start gap-2">
-                      <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                      <span className="text-on-surface-variant font-data-table text-data-table">{need}</span>
-                    </li>
-                  ))}
-                </ul>
+        ].map((p, idx) => {
+          // Bento: tiles 01 and 04 run wide (text + chart side by side),
+          // 02 and 03 run narrow (stacked). Varying size, not left/right rhythm.
+          const wide = idx === 0 || idx === 3;
+          return (
+            <article
+              key={p.n}
+              className={`rounded-2xl border border-outline-variant/70 bg-surface-bright/40 p-stack_lg md:p-10 flex flex-col transition-[border-color,box-shadow] duration-300 hover:border-primary/50 hover:shadow-[0_24px_60px_-34px_rgba(26,25,22,0.4)] ${
+                wide ? 'md:col-span-2' : ''
+              }`}
+            >
+              <div className={wide ? 'grid lg:grid-cols-2 gap-stack_lg lg:gap-12 items-center' : 'flex flex-col'}>
+                <div>
+                  <span className="font-label-sm text-label-sm text-outline mb-4 block">{p.n}</span>
+                  <h3 className="font-headline-md text-2xl md:text-headline-md mb-stack_md text-on-surface">{p.title}</h3>
+                  <p className="text-on-surface-variant mb-stack_lg font-body-md">{p.desc}</p>
+                  <div className="border-t border-outline-variant pt-stack_md">
+                    <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-tertiary mb-2 block">You need this if</span>
+                    <ul className="space-y-2">
+                      {p.needs.map((need) => (
+                        <li key={need} className="flex items-start gap-2">
+                          <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
+                          <span className="text-on-surface-variant font-data-table text-data-table">{need}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <Figure
+                  bare
+                  variant={p.variant}
+                  label={p.figLabel}
+                  caption={p.figCap}
+                  className={wide ? 'w-full' : 'w-full mt-stack_lg'}
+                />
               </div>
-            </div>
-            <Figure variant={p.variant} label={p.figLabel} caption={p.figCap} className={`w-full ${idx % 2 === 1 ? 'lg:order-1' : ''}`} />
-          </motion.div>
-        ))}
+            </article>
+          );
+        })}
       </section>
 
       {/* Capability Note: AI Callout */}
@@ -117,17 +136,17 @@ export default function Services() {
       </section>
 
       {/* Dark Principle Banner — full-bleed band */}
-      <section className="bg-iron-ink text-surface-container-low py-section_v_padding mt-section_v_padding_mobile">
+      <section className="band-darkest text-surface-container-low py-section_v_padding mt-section_v_padding_mobile">
         <div className="max-w-max_width mx-auto px-gutter flex flex-col items-center text-center gap-stack_lg">
           <span className="gold-dash bg-primary-fixed-dim"></span>
-          <h2 className="font-display-lg text-headline-md md:text-display-lg max-w-4xl text-surface-bright">
+          <h2 className="font-display-lg text-headline-md md:text-display-lg max-w-[68rem] text-surface-bright">
             &ldquo;We understand how finance systems work, regardless of which tools you happen to be running them on.&rdquo;
           </h2>
         </div>
       </section>
 
       {/* Contact Section — full-bleed dark band */}
-      <section className="bg-hero-dark text-surface-container-low py-section_v_padding">
+      <section className="band-fade-to-footer text-surface-container-low py-section_v_padding">
         <div className="max-w-max_width mx-auto px-gutter flex flex-wrap justify-between items-center gap-stack_lg">
           <h2 className="font-headline-md text-headline-md m-0 text-surface-bright max-w-xl">Not sure which of these you need?</h2>
           <Link to="/contact" className="btn-pill btn-gold shrink-0">Get in Touch</Link>

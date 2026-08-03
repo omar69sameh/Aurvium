@@ -153,6 +153,19 @@
     box-shadow: 0 24px 60px -34px rgba(26, 25, 22, 0.4);
   }
 
+  /* Dark run: darkest at the quote, fading down to meet the footer exactly.
+     Footer stays solid #323028 on every page. */
+  .band-darkest {
+    background-color: #0D0C09;
+  }
+  .band-fade-to-footer {
+    background: linear-gradient(180deg, #0D0C09 0%, #191814 55%, #262420 100%);
+  }
+  /* Footer sits at the end of the fade — same value on every page */
+  .band-footer {
+    background-color: #262420;
+  }
+
   /* Faint modern grid, fading out downward — echoes the reference hero */
   .grid-overlay {
     background-image:

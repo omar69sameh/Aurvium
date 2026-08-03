@@ -72,7 +72,7 @@ export default function Layout({ children }) {
                 <Link
                   key={link.to}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`font-body-md text-body-md uppercase tracking-wider transition-colors duration-300 pb-1 relative ${
+                  className={`font-eyebrow-mono text-eyebrow-mono uppercase tracking-wider transition-colors duration-300 pb-1 relative ${
                     isActive
                       ? 'text-primary font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-primary'
                       : 'text-on-surface-variant hover:text-primary'
@@ -118,7 +118,7 @@ export default function Layout({ children }) {
                 <Link
                   key={link.to}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`font-body-md text-body-md uppercase tracking-wider transition-colors duration-300 ${
+                  className={`font-eyebrow-mono text-eyebrow-mono uppercase tracking-wider transition-colors duration-300 ${
                     isActive ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'
                   }`}
                   to={link.to}
@@ -140,7 +140,7 @@ export default function Layout({ children }) {
 
       <main id="main-content">{children}</main>
 
-      <footer className="bg-inverse-surface dark:bg-on-background">
+      <footer className="band-footer">
         <div className="w-full py-section_v_padding px-gutter max-w-max_width mx-auto flex flex-col gap-stack_lg">
           <div className="flex flex-col md:flex-row justify-between items-start gap-stack_lg">
             <div className="flex flex-col gap-stack_md">

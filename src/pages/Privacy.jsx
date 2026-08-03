@@ -45,7 +45,7 @@ export default function Privacy() {
         description="How Aurvium handles the information you share through our contact form and email."
         path="/privacy"
       />
-      <section className="max-w-max_width mx-auto px-gutter pt-24 pb-section_v_padding flex flex-col items-start gap-stack_md">
+      <section className="max-w-max_width mx-auto px-gutter pt-10 pb-section_v_padding flex flex-col items-start gap-stack_md">
         <div className="flex items-center gap-stack_sm">
           <span className="gold-dash"></span>
           <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-primary tracking-[0.2em]">Privacy</span>

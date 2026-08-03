@@ -10,12 +10,6 @@ const pageVariants = {
   out: { opacity: 0, y: -20 }
 };
 
-const sectionReveal = {
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: 'easeOut' }
-};
-
 export default function Work() {
   return (
     <motion.div
@@ -31,7 +25,7 @@ export default function Work() {
         description="The thinking, not the war stories — first-principles notes on the architecture of finance systems."
         path="/work"
       />
-      <section className="py-section_v_padding border-b border-outline-variant max-w-max_width mx-auto px-gutter">
+      <section className="pt-10 pb-section_v_padding border-b border-outline-variant max-w-max_width mx-auto px-gutter">
         <div className="flex flex-col gap-stack_md">
           <div className="flex items-center gap-stack_sm">
             <span className="gold-dash"></span>
@@ -67,7 +61,7 @@ export default function Work() {
 
       <section className="py-section_v_padding flex flex-col gap-section_v_padding max-w-max_width mx-auto px-gutter">
         {/* ── Note 01 ─────────────────────────────────────────────────────── */}
-        <motion.article id="note-breaking-point" className="grid lg:grid-cols-[minmax(0,18rem)_1fr] gap-stack_lg lg:gap-16 scroll-mt-28" {...sectionReveal}>
+        <article id="note-breaking-point" className="grid lg:grid-cols-[minmax(0,18rem)_1fr] gap-stack_lg lg:gap-16 scroll-mt-28">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <span className="font-eyebrow-mono text-label-sm text-primary uppercase tracking-widest">01 / Pattern</span>
             <p className="font-display-lg text-2xl md:text-3xl italic text-on-surface-variant leading-snug mt-stack_md border-l-2 border-primary pl-stack_md">
@@ -88,10 +82,10 @@ export default function Work() {
               <p>The mistake is treating each disagreement as its own one-off problem to patch. They&apos;re usually symptoms of the same root cause: the systems were never designed to agree with each other, because nobody had to make them agree while the company was smaller. Fixing the pattern means designing one shared definition of the metrics that matter, and one path for the data to flow — not fixing each spreadsheet error as it&apos;s discovered.</p>
             </div>
           </div>
-        </motion.article>
+        </article>
 
         {/* ── Note 02 ─────────────────────────────────────────────────────── */}
-        <motion.article id="note-discrepancy" className="grid lg:grid-cols-[minmax(0,18rem)_1fr] gap-stack_lg lg:gap-16 scroll-mt-28" {...sectionReveal}>
+        <article id="note-discrepancy" className="grid lg:grid-cols-[minmax(0,18rem)_1fr] gap-stack_lg lg:gap-16 scroll-mt-28">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <span className="font-eyebrow-mono text-label-sm text-primary uppercase tracking-widest">02 / Investigation</span>
             <p className="font-display-lg text-2xl md:text-3xl italic text-on-surface-variant leading-snug mt-stack_md border-l-2 border-primary pl-stack_md">
@@ -125,10 +119,10 @@ export default function Work() {
               ))}
             </ol>
           </div>
-        </motion.article>
+        </article>
 
         {/* ── Note 03 ─────────────────────────────────────────────────────── */}
-        <motion.article id="note-erp" className="grid lg:grid-cols-[minmax(0,18rem)_1fr] gap-stack_lg lg:gap-16 scroll-mt-28" {...sectionReveal}>
+        <article id="note-erp" className="grid lg:grid-cols-[minmax(0,18rem)_1fr] gap-stack_lg lg:gap-16 scroll-mt-28">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <span className="font-eyebrow-mono text-label-sm text-primary uppercase tracking-widest">03 / Principle</span>
             <p className="font-display-lg text-2xl md:text-3xl italic text-on-surface-variant leading-snug mt-stack_md border-l-2 border-primary pl-stack_md">
@@ -149,10 +143,10 @@ export default function Work() {
               <p>The migrations that actually work start with the process design, not the software selection: agree on the definitions, map how money should move end to end, decide the recognition logic — and only then pick the system that can hold that design. Done in the other order, the company ends up with a more expensive spreadsheet that happens to have a login screen.</p>
             </div>
           </div>
-        </motion.article>
+        </article>
       </section>
 
-      <section className="bg-iron-ink text-surface-container-low py-section_v_padding">
+      <section className="band-fade-to-footer text-surface-container-low py-section_v_padding">
         <div className="max-w-max_width mx-auto px-gutter flex flex-wrap justify-between items-center gap-stack_lg">
           <h2 className="font-headline-md text-headline-md m-0 text-surface-bright max-w-xl">Recognize this pattern in your own systems?</h2>
           <Link to="/contact" className="btn-pill btn-gold shrink-0">Get in Touch</Link>
