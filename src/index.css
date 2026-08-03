@@ -8,9 +8,14 @@
   }
 
   body {
-    @apply bg-background text-on-surface font-body-md;
+    @apply text-on-surface font-body-md;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    /* One continuous warm fade for the whole page — no visible section bands.
+       Fixed to the viewport so every screenful shares the same gradient. */
+    background: linear-gradient(180deg, #FEF9ED 0%, #F7F1E3 32%, #EFE9DB 64%, #E9E2D2 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
   }
   
   /* Global focus styles for accessibility */
@@ -101,10 +106,61 @@
 
   /* Grid hover transition effects */
   .grid-hover-effect {
-    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:border-primary/60 hover:bg-surface-variant/60;
+    @apply rounded-2xl transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_18px_40px_-24px_rgba(26,25,22,0.4)];
   }
   .interactive-panel {
-    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/60 hover:bg-surface-container;
+    @apply rounded-2xl transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_18px_40px_-24px_rgba(26,25,22,0.4)];
+  }
+
+  /* ── Modern pill buttons ─────────────────────────────────────────────── */
+  .btn-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 9999px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    padding: 15px 32px;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+  .btn-pill:active { transform: scale(0.97); }
+
+  .btn-primary { background-color: #1A1916; color: #FEF9ED; }
+  .btn-primary:hover { background-color: #2C2B27; transform: translateY(-2px); box-shadow: 0 12px 26px -12px rgba(26, 25, 22, 0.6); }
+
+  .btn-ghost { border: 1px solid #7f7664; color: #1d1c14; background: transparent; }
+  .btn-ghost:hover { border-color: #b8922a; color: #775a00; background-color: rgba(184, 146, 42, 0.07); transform: translateY(-2px); }
+
+  .btn-gold { background-color: #b8922a; color: #1A1916; }
+  .btn-gold:hover { background-color: #a37f22; transform: translateY(-2px); box-shadow: 0 12px 26px -12px rgba(184, 146, 42, 0.55); }
+
+  .btn-on-dark { background-color: #EDE8DC; color: #1A1916; }
+  .btn-on-dark:hover { background-color: #ffffff; transform: translateY(-2px); box-shadow: 0 12px 26px -12px rgba(0, 0, 0, 0.5); }
+
+  /* ── Placeholder figures (stand-ins for real graphs) ─────────────────── */
+  .figure {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(209, 197, 176, 0.7);
+    background: linear-gradient(160deg, #fbf8f0, #f0eadb);
+    box-shadow: 0 24px 60px -34px rgba(26, 25, 22, 0.4);
+  }
+
+  /* Faint modern grid, fading out downward — echoes the reference hero */
+  .grid-overlay {
+    background-image:
+      linear-gradient(rgba(26, 25, 22, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26, 25, 22, 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6), transparent 85%);
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6), transparent 85%);
   }
 }
 

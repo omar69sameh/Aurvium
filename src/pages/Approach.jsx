@@ -8,23 +8,12 @@ const pageVariants = {
   out: { opacity: 0, y: -20 }
 };
 
+// Animate on mount (not scroll) so content is always visible regardless of
+// the browser's IntersectionObserver timing.
 const sectionReveal = {
   initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-50px' },
+  animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6, ease: 'easeOut' }
-};
-
-const staggerContainer = {
-  initial: { opacity: 0 },
-  whileInView: { opacity: 1, transition: { staggerChildren: 0.15 } },
-  viewport: { once: true, margin: '-50px' }
-};
-
-const staggerItem = {
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
 };
 
 export default function Approach() {
@@ -53,68 +42,86 @@ export default function Approach() {
             The contact form starts a conversation, not an engagement. From there, everything runs in defined, scoped phases, with a fixed price and a fixed deliverable at each one — no ongoing service line to renew.
           </p>
         </div>
-        <div className="mt-16 border-b hairline-gold w-full"></div>
+
+        {/* Scannable anchors — the engagement in four facts */}
+        <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-px bg-outline-variant/50 border border-outline-variant/50">
+          {[
+            { k: '20–30 min', v: 'Initial fit call' },
+            { k: 'Fixed', v: 'Scope & price' },
+            { k: 'One', v: 'Defined outcome' },
+            { k: 'No', v: 'Retainer, no subscription' },
+          ].map((s) => (
+            <div key={s.v} className="bg-surface-bright/40 px-stack_md py-stack_lg">
+              <p className="font-display-lg text-3xl md:text-4xl text-on-surface leading-none">{s.k}</p>
+              <p className="font-eyebrow-mono text-label-sm uppercase tracking-widest text-outline mt-3">{s.v}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
-      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding bg-surface-container-low">
+      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding">
         <div className="mb-16">
           <div className="gold-dash"></div>
           <h2 className="font-display-lg text-headline-md mb-2">The Architectural Path</h2>
           <div className="w-full border-b hairline-gold"></div>
         </div>
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-4 gap-12"
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="whileInView"
-          viewport={{ once: true, margin: '-50px' }}
-        >
-          <motion.div className="flex flex-col" variants={staggerItem}>
-            <span className="font-eyebrow-mono text-display-lg-mobile text-primary-container opacity-50 mb-4">00</span>
-            <h3 className="font-eyebrow-mono text-label-sm uppercase mb-4 font-bold">Initial Fit Conversation</h3>
-            <p className="font-body-md text-on-surface-variant mb-4">
-              A short video call — no preparation required. The only goal is answering three questions: is this genuinely a finance-systems problem, is Aurvium the right studio for it, and is Discovery the right first step. No consulting, no diagnosis, no solution design happens here.
-            </p>
-            <div className="mt-auto border-t border-outline-variant/30 pt-4 text-xs font-data-table text-on-surface-variant/80">
-              <span className="block font-bold text-tertiary">Typical duration:</span> 20–30 minutes
-              <br />
-              <span className="block font-bold text-tertiary mt-2">You get:</span> A clear yes or no on fit — no obligation either way
-            </div>
-          </motion.div>
+        {/* Vertical channel timeline — the engagement on one gold spine */}
+        <ol className="relative">
+          {/* the channel itself */}
+          <div className="absolute left-[22px] top-3 bottom-3 w-px bg-primary/35" aria-hidden="true"></div>
 
-          <motion.div className="flex flex-col" variants={staggerItem}>
-            <span className="font-eyebrow-mono text-display-lg-mobile text-primary-container opacity-50 mb-4">01</span>
-            <h3 className="font-eyebrow-mono text-label-sm uppercase mb-4 font-bold">Discovery</h3>
-            <p className="font-body-md text-on-surface-variant mb-4">
-              The first paid engagement. We look at what actually exists today — Stripe configuration, spreadsheet logic, whatever ERP or lack of one — and identify exactly where it will break first as you scale, and how urgently.
-            </p>
-            <div className="mt-auto border-t border-outline-variant/30 pt-4 text-xs font-data-table text-on-surface-variant/80">
-              <span className="block font-bold text-tertiary">You get:</span> A written findings report with a prioritized risk list
-            </div>
-          </motion.div>
+          {[
+            {
+              num: '00', title: 'Initial Fit Conversation',
+              desc: 'A short video call — no preparation required. The only goal is answering three questions: is this genuinely a finance-systems problem, is Aurvium the right studio for it, and is Discovery the right first step. No consulting, no diagnosis, no solution design happens here.',
+              duration: '20–30 minutes',
+              gets: 'A clear yes or no on fit — no obligation either way',
+            },
+            {
+              num: '01', title: 'Discovery',
+              desc: 'The first paid engagement. We look at what actually exists today — Stripe configuration, spreadsheet logic, whatever ERP or lack of one — and identify exactly where it will break first as you scale, and how urgently.',
+              gets: 'A written findings report with a prioritized risk list',
+            },
+            {
+              num: '02', title: 'Design',
+              desc: 'A scoped architecture for the specific systems you need — the data flow, revenue recognition logic, reporting structure, or process redesign — sized to your current stage, not a generic template.',
+              gets: 'A written design document and implementation plan',
+            },
+            {
+              num: '03', title: 'Getting It Live',
+              desc: 'We configure directly within standard, vendor-supported tools. Where the work genuinely needs specialist engineering — a custom ERP build, custom integrations — we clearly define what needs to be built, work alongside the relevant implementation partner where useful, and can recommend the right type of specialist if needed. Either way, Aurvium reviews and validates that what gets built matches the design.',
+              gets: 'A live, documented setup, validated against the design',
+            },
+          ].map((step) => (
+            <li key={step.num} className="relative pl-16 pb-section_v_padding_mobile last:pb-0">
+              {/* node on the spine */}
+              <span className="absolute left-0 top-0 z-10 w-11 h-11 rounded-full bg-iron-ink text-surface-bright flex items-center justify-center font-eyebrow-mono text-sm">
+                {step.num}
+              </span>
 
-          <motion.div className="flex flex-col" variants={staggerItem}>
-            <span className="font-eyebrow-mono text-display-lg-mobile text-primary-container opacity-50 mb-4">02</span>
-            <h3 className="font-eyebrow-mono text-label-sm uppercase mb-4 font-bold">Design</h3>
-            <p className="font-body-md text-on-surface-variant mb-4">
-              A scoped architecture for the specific systems you need — the data flow, revenue recognition logic, reporting structure, or process redesign — sized to your current stage, not a generic template.
-            </p>
-            <div className="mt-auto border-t border-outline-variant/30 pt-4 text-xs font-data-table text-on-surface-variant/80">
-              <span className="block font-bold text-tertiary">You get:</span> A written design document and implementation plan
-            </div>
-          </motion.div>
+              <div className="grid lg:grid-cols-[1fr_auto] gap-stack_lg lg:gap-16 items-start">
+                <div className="max-w-[68ch]">
+                  <h3 className="font-headline-md text-2xl text-on-surface mb-3">{step.title}</h3>
+                  <p className="font-body-md text-on-surface-variant">{step.desc}</p>
+                </div>
 
-          <motion.div className="flex flex-col" variants={staggerItem}>
-            <span className="font-eyebrow-mono text-display-lg-mobile text-primary-container opacity-50 mb-4">03</span>
-            <h3 className="font-eyebrow-mono text-label-sm uppercase mb-4 font-bold">Getting It Live</h3>
-            <p className="font-body-md text-on-surface-variant mb-4">
-              We configure directly within standard, vendor-supported tools. Where the work genuinely needs specialist engineering — a custom ERP build, custom integrations — we clearly define what needs to be built, work alongside the relevant implementation partner where useful, and can recommend the right type of specialist if needed. Either way, Aurvium reviews and validates that what gets built matches the design.
-            </p>
-            <div className="mt-auto border-t border-outline-variant/30 pt-4 text-xs font-data-table text-on-surface-variant/80">
-              <span className="block font-bold text-tertiary">You get:</span> A live, documented setup, validated against the design
-            </div>
-          </motion.div>
-        </motion.div>
+                {/* right-side detail rail */}
+                <dl className="lg:w-64 shrink-0 border-l-2 border-primary/40 pl-stack_md space-y-stack_md">
+                  {step.duration && (
+                    <div>
+                      <dt className="font-eyebrow-mono text-label-sm uppercase tracking-widest text-tertiary">Typical duration</dt>
+                      <dd className="font-data-table text-data-table text-on-surface-variant mt-1">{step.duration}</dd>
+                    </div>
+                  )}
+                  <div>
+                    <dt className="font-eyebrow-mono text-label-sm uppercase tracking-widest text-tertiary">You get</dt>
+                    <dd className="font-data-table text-data-table text-on-surface-variant mt-1">{step.gets}</dd>
+                  </div>
+                </dl>
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <section className="max-w-max_width mx-auto px-gutter py-section_v_padding">
@@ -150,63 +157,63 @@ export default function Approach() {
             </ul>
           </motion.div>
         </div>
-        <p className="font-body-md text-on-surface-variant mt-8 max-w-4xl italic">
+        <p className="font-body-md text-on-surface-variant mt-8 max-w-[68ch] italic">
           Aurvium owns the design. It may participate in delivery, but it never promises to own every aspect of implementation. When specialist work is required, Aurvium remains the architectural authority — reviewing, guiding, and validating that the implementation reflects the intended design, whether the work is performed directly, by your team, or by an external partner.
         </p>
       </section>
 
       <section className="max-w-max_width mx-auto px-gutter py-section_v_padding">
-        <div className="mb-16">
-          <div className="flex items-center gap-stack_sm">
-            <span className="gold-dash"></span>
-            <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">Why This Way</p>
+        <div className="grid lg:grid-cols-[minmax(0,20rem)_1fr] gap-stack_lg lg:gap-16 items-start">
+          {/* lead-in, beside the matrix */}
+          <div className="lg:sticky lg:top-28">
+            <div className="flex items-center gap-stack_sm">
+              <span className="gold-dash"></span>
+              <p className="font-eyebrow-mono text-eyebrow-mono uppercase text-stone">Why This Way</p>
+            </div>
+            <h2 className="font-display-lg text-headline-md mt-4">The alternatives, and where they fall short.</h2>
           </div>
-          <h2 className="font-display-lg text-headline-md mb-2 mt-4">The alternatives, and where they fall short.</h2>
-          <div className="w-full border-b hairline-gold"></div>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-surface-container border-b-2 border-primary-container">
-                <th className="p-6 text-left font-eyebrow-mono text-label-sm uppercase text-outline tracking-widest">Alternative</th>
-                <th className="p-6 text-left font-eyebrow-mono text-label-sm uppercase text-on-surface tracking-widest">Why it falls short</th>
-              </tr>
-            </thead>
-            <tbody className="font-data-table text-data-table">
-              <tr className="border-b border-outline-variant hover:bg-surface-container transition-all duration-300">
-                <td className="p-6 font-bold uppercase text-on-surface">Hiring in-house</td>
-                <td className="p-6 text-on-surface-variant">
-                  Slow to recruit for, expensive to carry at this stage, and the first hire is usually a generalist — not someone who&apos;s spent years specifically on finance systems design.
-                </td>
-              </tr>
-              <tr className="border-b border-outline-variant hover:bg-surface-container transition-all duration-300">
-                <td className="p-6 font-bold uppercase text-on-surface">Outsourced bookkeeping / fractional CFO firms</td>
-                <td className="p-6 text-on-surface-variant">
-                  They maintain the books that already exist. They don&apos;t design the systems those books depend on — so the underlying fragility never actually gets addressed.
-                </td>
-              </tr>
-              <tr className="border-b border-outline-variant hover:bg-primary-container/5 transition-all duration-300">
-                <td className="p-6 font-bold uppercase text-primary">Aurvium</td>
-                <td className="p-6 text-on-surface-variant">
-                  Closer to an architecture firm than an accounting firm. Engaged for a defined design, with a clear, honest plan for getting it live — not a recurring service line.
-                </td>
-              </tr>
-            </tbody>
-          </table>
+
+          {/* comparison matrix — Aurvium row carries the gold */}
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse min-w-[36rem]">
+              <thead>
+                <tr className="border-b-2 border-primary-container">
+                  <th className="py-4 pr-6 text-left font-eyebrow-mono text-label-sm uppercase text-outline tracking-widest w-1/3">Alternative</th>
+                  <th className="py-4 text-left font-eyebrow-mono text-label-sm uppercase text-on-surface tracking-widest">Why it falls short</th>
+                </tr>
+              </thead>
+              <tbody className="font-data-table text-data-table align-top">
+                <tr className="border-b border-outline-variant">
+                  <td className="py-6 pr-6 font-bold uppercase text-on-surface">Hiring in-house</td>
+                  <td className="py-6 text-on-surface-variant">
+                    Slow to recruit for, expensive to carry at this stage, and the first hire is usually a generalist — not someone who&apos;s spent years specifically on finance systems design.
+                  </td>
+                </tr>
+                <tr className="border-b border-outline-variant">
+                  <td className="py-6 pr-6 font-bold uppercase text-on-surface">Outsourced bookkeeping / fractional CFO firms</td>
+                  <td className="py-6 text-on-surface-variant">
+                    They maintain the books that already exist. They don&apos;t design the systems those books depend on — so the underlying fragility never actually gets addressed.
+                  </td>
+                </tr>
+                <tr className="bg-primary/[0.07] border-l-2 border-primary">
+                  <td className="py-6 px-6 font-bold uppercase text-primary">Aurvium</td>
+                  <td className="py-6 pr-6 text-on-surface">
+                    Closer to an architecture firm than an accounting firm. Engaged for a defined design, with a clear, honest plan for getting it live — not a recurring service line.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
-      <section className="max-w-max_width mx-auto px-gutter py-section_v_padding">
-        <motion.div className="relative bg-inverse-surface p-16 text-center overflow-hidden" {...sectionReveal}>
-          <div className="relative z-10">
-            <h2 className="font-display-lg text-display-lg text-surface-bright mb-8">Ready for an initial conversation?</h2>
-            <p className="font-body-lg text-surface-variant/80 max-w-xl mx-auto mb-12">
-              Tell us where your system is causing friction. We will schedule a short 20–30 minute fit conversation.
-            </p>
-            <Link to="/contact" className="btn-swipe bg-primary text-surface px-12 py-4 font-eyebrow-mono text-eyebrow-mono uppercase tracking-widest hover:text-white transition-all duration-300 inline-block active:scale-95">
-              <span className="relative z-10">Get in Touch</span>
-            </Link>
-          </div>
+      <section className="bg-iron-ink py-section_v_padding text-center">
+        <motion.div className="max-w-max_width mx-auto px-gutter" {...sectionReveal}>
+          <h2 className="font-display-lg text-headline-md md:text-display-lg text-surface-bright mb-6">Ready for an initial conversation?</h2>
+          <p className="font-body-lg text-surface-variant/80 max-w-xl mx-auto mb-10">
+            Tell us where your system is causing friction. We will schedule a short 20–30 minute fit conversation.
+          </p>
+          <Link to="/contact" className="btn-pill btn-gold">Get in Touch</Link>
         </motion.div>
       </section>
     </motion.div>

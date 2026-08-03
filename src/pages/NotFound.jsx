@@ -31,12 +31,8 @@ export default function NotFound() {
           The address may have changed, or the page was never here. Everything else is still where you left it.
         </p>
         <div className="flex flex-wrap gap-stack_md mt-stack_sm">
-          <Link to="/" className="btn-swipe bg-iron-ink text-surface-container-low px-stack_lg py-4 font-label-sm text-label-sm uppercase inline-block">
-            <span className="relative z-10">Back to home</span>
-          </Link>
-          <Link to="/contact" className="btn-swipe border border-outline text-on-surface px-stack_lg py-4 font-label-sm text-label-sm uppercase inline-block">
-            <span className="relative z-10">Get in touch →</span>
-          </Link>
+          <Link to="/" className="btn-pill btn-primary">Back to home</Link>
+          <Link to="/contact" className="btn-pill btn-ghost">Get in touch →</Link>
         </div>
       </section>
     </motion.div>

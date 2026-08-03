@@ -42,9 +42,9 @@ export default class ErrorBoundary extends Component {
           <Link
             to="/"
             onClick={this.handleReset}
-            className="btn-swipe bg-iron-ink text-surface-container-low px-stack_lg py-4 font-label-sm text-label-sm uppercase inline-block"
+            className="btn-pill btn-primary"
           >
-            <span className="relative z-10">Back to home</span>
+            Back to home
           </Link>
         </div>
       </section>

@@ -4,9 +4,9 @@ import Icon from './Icon';
 
 export default function Layout({ children }) {
   const location = useLocation();
-  const [showNav, setShowNav] = useState(true);
+  const [isScrolling, setIsScrolling] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const lastScrollY = useRef(0);
+  const idleTimer = useRef(null);
 
   const navLinks = [
     { to: '/', label: 'Home' },
@@ -22,34 +22,22 @@ export default function Layout({ children }) {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  // Hide nav on scroll down, show on scroll up.
-  // Registered once; last position is held in a ref and reads are throttled to
-  // one per animation frame so the handler never thrashes.
+  // The header always stays put; it just fades back while the page is moving
+  // and returns to full opacity once scrolling stops (or on hover/focus).
+  // Registered once, throttled to one read per animation frame.
   useEffect(() => {
-    let ticking = false;
-
-    const update = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
-        setShowNav(false);
-      } else if (currentScrollY < lastScrollY.current) {
-        setShowNav(true);
-      }
-
-      lastScrollY.current = currentScrollY;
-      ticking = false;
-    };
-
     const handleScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(update);
-      }
+      // Cheap state set (no layout reads here), so no rAF throttle needed.
+      setIsScrolling(true);
+      window.clearTimeout(idleTimer.current);
+      idleTimer.current = window.setTimeout(() => setIsScrolling(false), 500);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.clearTimeout(idleTimer.current);
+    };
   }, []);
 
   return (
@@ -58,9 +46,10 @@ export default function Layout({ children }) {
         Skip to content
       </a>
 
-      <header 
-        className="bg-surface/90 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant transition-transform duration-300"
-        style={{ transform: showNav ? 'translateY(0)' : 'translateY(-100%)' }}
+      <header
+        className={`bg-[#FDF8EC]/70 backdrop-blur-xl sticky top-0 z-50 border-b border-outline-variant/40 transition-opacity duration-300 ease-out hover:opacity-100 focus-within:opacity-100 ${
+          isScrolling && !mobileMenuOpen ? 'opacity-40' : 'opacity-100'
+        }`}
       >
         <div className="flex justify-between items-center w-full px-gutter max-w-max_width mx-auto h-20">
           <Link to="/" className="flex items-center gap-4 group" aria-label="Aurvium Home">
@@ -98,7 +87,7 @@ export default function Layout({ children }) {
 
           <button
             type="button"
-            className="md:hidden flex items-center justify-center w-11 h-11 border border-outline-variant text-on-surface transition-colors duration-300 hover:border-primary hover:text-primary"
+            className="md:hidden flex items-center justify-center w-11 h-11 rounded-full border border-outline-variant text-on-surface transition-colors duration-300 hover:border-primary hover:text-primary"
             aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation"
@@ -107,17 +96,17 @@ export default function Layout({ children }) {
             <Icon name={mobileMenuOpen ? 'close' : 'menu'} size={24} />
           </button>
 
-          <Link 
-            to="/contact" 
-            className="btn-swipe btn-swipe-dark hidden md:inline-flex bg-iron-ink text-surface-container-low px-gutter py-stack_sm font-label-sm text-label-sm uppercase active:scale-95"
+          <Link
+            to="/contact"
+            className="btn-pill btn-primary hidden md:inline-flex"
           >
-            <span className="relative z-10">Get in Touch</span>
+            Get in Touch
           </Link>
         </div>
 
         <div
           id="mobile-navigation"
-          className={`md:hidden border-t border-outline-variant bg-surface transition-all duration-300 overflow-hidden ${
+          className={`md:hidden border-t border-outline-variant/50 bg-[#FDF8EC]/95 backdrop-blur-xl transition-all duration-300 overflow-hidden ${
             mobileMenuOpen ? 'max-h-[32rem] opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
@@ -141,9 +130,9 @@ export default function Layout({ children }) {
 
             <Link
               to="/contact"
-              className="btn-swipe btn-swipe-dark inline-flex justify-center bg-iron-ink text-surface-container-low px-gutter py-stack_sm font-label-sm text-label-sm uppercase active:scale-95 mt-2"
+              className="btn-pill btn-primary justify-center mt-2"
             >
-              <span className="relative z-10">Get in Touch</span>
+              Get in Touch
             </Link>
           </nav>
         </div>

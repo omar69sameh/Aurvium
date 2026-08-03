@@ -10,8 +10,7 @@ const pageVariants = {
 
 const sectionReveal = {
   initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-50px' },
+  animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6, ease: 'easeOut' }
 };
 
@@ -125,7 +124,7 @@ export default function Contact() {
 
 
       <section className="pb-section_v_padding max-w-max_width mx-auto px-gutter">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-outline-variant bg-surface-container-low">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 rounded-2xl overflow-hidden border border-outline-variant bg-surface-container-low/60">
           <div className="grid-hover-effect p-8 border-b md:border-b-0 md:border-r border-outline-variant flex flex-col gap-4">
             <span className="font-eyebrow-mono text-label-sm text-outline">01 / ENGAGEMENT</span>
             <h3 className="font-display-lg text-headline-md text-on-surface">1. You reach out</h3>
@@ -175,7 +174,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          <motion.div className="lg:col-span-7 bg-surface-container-high p-stack_lg border border-outline-variant" {...sectionReveal}>
+          <motion.div className="lg:col-span-7 bg-surface-container-high/70 rounded-2xl p-stack_lg md:p-10 border border-outline-variant" {...sectionReveal}>
             {status === 'success' ? (
               <div className="flex flex-col gap-stack_md h-full justify-center" role="status" aria-live="polite">
                 <div className="flex items-center gap-4">
@@ -195,9 +194,9 @@ export default function Contact() {
                 <button
                   type="button"
                   onClick={() => setStatus('idle')}
-                  className="btn-swipe w-full md:w-max px-12 py-4 bg-on-background text-surface font-eyebrow-mono uppercase tracking-[0.2em] text-sm active:scale-95 mt-2"
+                  className="btn-pill btn-primary w-full md:w-auto mt-2"
                 >
-                  <span className="relative z-10">Send another</span>
+                  Send another
                 </button>
               </div>
             ) : (
@@ -276,11 +275,11 @@ export default function Contact() {
                 )}
 
                 <button
-                  className="btn-swipe w-full md:w-max px-12 py-4 bg-on-background text-surface font-eyebrow-mono uppercase tracking-[0.2em] text-sm active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="btn-pill btn-primary w-full md:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
                   type="submit"
                   disabled={status === 'submitting'}
                 >
-                  <span className="relative z-10">{status === 'submitting' ? 'Sending…' : 'Send'}</span>
+                  {status === 'submitting' ? 'Sending…' : 'Send'}
                 </button>
               </form>
             )}

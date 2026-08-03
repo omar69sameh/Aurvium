@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Icon from '../components/Icon';
 import Seo from '../components/Seo';
+import Figure from '../components/Figure';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -11,8 +12,7 @@ const pageVariants = {
 
 const sectionReveal = {
   initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-50px" },
+  animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6, ease: "easeOut" }
 };
 
@@ -48,113 +48,54 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Pillar Grid */}
-      <section className="pb-section_v_padding max-w-max_width mx-auto px-gutter">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-stack_lg">
-          {/* Pillar 1 */}
-          <motion.div className="grid-hover-effect bg-surface-container p-stack_lg border border-transparent flex flex-col justify-between group" {...sectionReveal}>
-            <div>
-              <span className="font-label-sm text-label-sm text-outline mb-4 block">01 / CHOICE</span>
-              <h3 className="font-headline-md text-headline-md mb-stack_md text-on-surface">The right system, chosen once</h3>
-              <p className="text-on-surface-variant mb-stack_lg font-body-md">An honest read on what you're actually running today, and what fits your size and budget — so you're not re-evaluating tools every 18 months.</p>
-              <div className="border-t border-outline-variant pt-stack_md">
+      {/* What changes — each outcome paired with its picture, alternating */}
+      <section className="max-w-max_width mx-auto px-gutter pb-section_v_padding flex flex-col gap-section_v_padding_mobile">
+        {[
+          {
+            n: '01 / CHOICE', title: 'The right system, chosen once',
+            desc: "An honest read on what you're actually running today, and what fits your size and budget — so you're not re-evaluating tools every 18 months.",
+            variant: 'flow', figLabel: 'The architecture we leave behind', figCap: 'Stripe → pipeline → ERP → reporting — illustrative',
+            needs: ["You're choosing between finance/billing tools and don't have someone to vet them properly", "Nobody can say with confidence what your current setup can and can't handle", "You're planning an ERP move and want a second opinion before committing"]
+          },
+          {
+            n: '02 / INTEGRITY', title: 'Revenue numbers that hold up',
+            desc: "Recognition logic designed so revenue is counted the same way everywhere it's reported — in the board deck, the ledger, and the audit file, not just wherever it was last checked.",
+            variant: 'revrec', figLabel: 'Revenue recognition schedule', figCap: 'Deferred burns down as revenue is recognized over the term — illustrative',
+            needs: ["Recognition is still a manual spreadsheet exercise every close", "Auditors have flagged your revenue schedule as a risk area", "You're introducing usage-based or multi-element contracts"]
+          },
+          {
+            n: '03 / FLOW', title: 'A close without the fire drill',
+            desc: "How money actually moves through your stack — Stripe, HubSpot, your ledger — redesigned at the exact point it breaks, instead of patched around it every quarter.",
+            variant: 'cycletime', figLabel: 'Days to close', figCap: 'Close cycle time, quarter over quarter — illustrative',
+            needs: ["Stripe and your ledger disagree and nobody's sure which one is right", "Collections, AR aging, or billing exceptions are handled by memory, not process", "Every close involves the same manual fire drill"]
+          },
+          {
+            n: '04 / ALIGNMENT', title: 'One number everyone trusts',
+            desc: "KPI definitions and a reporting structure so the board deck, the data warehouse, and the audit file are finally looking at the same figure.",
+            variant: 'converge', figLabel: 'Board deck vs. warehouse', figCap: 'Two systems reconciling to one number — illustrative',
+            needs: ["Board reporting and finance's internal numbers don't quite match", "Churn and expansion analysis gets rebuilt by hand every quarter", "Nobody can explain a metric's exact definition on demand"]
+          }
+        ].map((p, idx) => (
+          <motion.div key={p.n} className="grid lg:grid-cols-2 gap-stack_lg lg:gap-16 items-center" {...sectionReveal}>
+            <div className={idx % 2 === 1 ? 'lg:order-2' : ''}>
+              <span className="font-label-sm text-label-sm text-outline mb-4 block">{p.n}</span>
+              <h3 className="font-headline-md text-headline-md mb-stack_md text-on-surface">{p.title}</h3>
+              <p className="text-on-surface-variant mb-stack_lg font-body-md max-w-lg">{p.desc}</p>
+              <div className="border-t border-outline-variant pt-stack_md max-w-lg">
                 <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-tertiary mb-2 block">You need this if</span>
                 <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">You're choosing between finance/billing tools and don't have someone to vet them properly</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">Nobody can say with confidence what your current setup can and can't handle</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">You're planning an ERP move and want a second opinion before committing</span>
-                  </li>
+                  {p.needs.map((need) => (
+                    <li key={need} className="flex items-start gap-2">
+                      <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
+                      <span className="text-on-surface-variant font-data-table text-data-table">{need}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
+            <Figure variant={p.variant} label={p.figLabel} caption={p.figCap} className={`w-full ${idx % 2 === 1 ? 'lg:order-1' : ''}`} />
           </motion.div>
-
-          {/* Pillar 2 */}
-          <motion.div className="grid-hover-effect bg-surface-container p-stack_lg border border-transparent flex flex-col justify-between group" {...sectionReveal} transition={{ delay: 0.1 }}>
-            <div>
-              <span className="font-label-sm text-label-sm text-outline mb-4 block">02 / INTEGRITY</span>
-              <h3 className="font-headline-md text-headline-md mb-stack_md text-on-surface">Revenue numbers that hold up</h3>
-              <p className="text-on-surface-variant mb-stack_lg font-body-md">Recognition logic designed so revenue is counted the same way everywhere it's reported — in the board deck, the ledger, and the audit file, not just wherever it was last checked.</p>
-              <div className="border-t border-outline-variant pt-stack_md">
-                <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-tertiary mb-2 block">You need this if</span>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">Recognition is still a manual spreadsheet exercise every close</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">Auditors have flagged your revenue schedule as a risk area</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">You're introducing usage-based or multi-element contracts</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Pillar 3 */}
-          <motion.div className="grid-hover-effect bg-surface-container p-stack_lg border border-transparent flex flex-col justify-between group" {...sectionReveal}>
-            <div>
-              <span className="font-label-sm text-label-sm text-outline mb-4 block">03 / FLOW</span>
-              <h3 className="font-headline-md text-headline-md mb-stack_md text-on-surface">A close without the fire drill</h3>
-              <p className="text-on-surface-variant mb-stack_lg font-body-md">How money actually moves through your stack — Stripe, HubSpot, your ledger — redesigned at the exact point it breaks, instead of patched around it every quarter.</p>
-              <div className="border-t border-outline-variant pt-stack_md">
-                <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-tertiary mb-2 block">You need this if</span>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">Stripe and your ledger disagree and nobody's sure which one is right</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">Collections, AR aging, or billing exceptions are handled by memory, not process</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">Every close involves the same manual fire drill</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Pillar 4 */}
-          <motion.div className="grid-hover-effect bg-surface-container p-stack_lg border border-transparent flex flex-col justify-between group" {...sectionReveal} transition={{ delay: 0.1 }}>
-            <div>
-              <span className="font-label-sm text-label-sm text-outline mb-4 block">04 / ALIGNMENT</span>
-              <h3 className="font-headline-md text-headline-md mb-stack_md text-on-surface">One number everyone trusts</h3>
-              <p className="text-on-surface-variant mb-stack_lg font-body-md">KPI definitions and a reporting structure so the board deck, the data warehouse, and the audit file are finally looking at the same figure.</p>
-              <div className="border-t border-outline-variant pt-stack_md">
-                <span className="font-eyebrow-mono text-eyebrow-mono uppercase text-tertiary mb-2 block">You need this if</span>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">Board reporting and finance's internal numbers don't quite match</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">Churn and expansion analysis gets rebuilt by hand every quarter</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Icon name="check_small" className="text-primary shrink-0 mt-0.5" size={18} />
-                    <span className="text-on-surface-variant font-data-table text-data-table">Nobody can explain a metric's exact definition on demand</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+        ))}
       </section>
 
       {/* Capability Note: AI Callout */}
@@ -175,23 +116,21 @@ export default function Services() {
         </motion.div>
       </section>
 
-      {/* Dark Principle Banner */}
-      <section className="bg-iron-ink py-section_v_padding text-surface-container-low mt-section_v_padding">
-        <div className="max-w-max_width mx-auto px-gutter text-center flex flex-col items-center gap-stack_lg">
+      {/* Dark Principle Banner — full-bleed band */}
+      <section className="bg-iron-ink text-surface-container-low py-section_v_padding mt-section_v_padding_mobile">
+        <div className="max-w-max_width mx-auto px-gutter flex flex-col items-center text-center gap-stack_lg">
           <span className="gold-dash bg-primary-fixed-dim"></span>
           <h2 className="font-display-lg text-headline-md md:text-display-lg max-w-4xl text-surface-bright">
-            "We understand how finance systems work, regardless of which tools you happen to be running them on."
+            &ldquo;We understand how finance systems work, regardless of which tools you happen to be running them on.&rdquo;
           </h2>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="bg-surface py-section_v_padding text-on-surface">
-        <div className="max-w-max_width mx-auto px-gutter flex flex-wrap justify-between items-center gap-6">
-          <h2 className="font-headline-md text-headline-md m-0">Not sure which of these you need?</h2>
-          <Link to="/contact" className="btn-swipe bg-iron-ink text-surface-container-low px-stack_lg py-4 font-label-sm text-label-sm uppercase hover:text-white inline-block">
-            <span className="relative z-10">Get in Touch</span>
-          </Link>
+      {/* Contact Section — full-bleed dark band */}
+      <section className="bg-hero-dark text-surface-container-low py-section_v_padding">
+        <div className="max-w-max_width mx-auto px-gutter flex flex-wrap justify-between items-center gap-stack_lg">
+          <h2 className="font-headline-md text-headline-md m-0 text-surface-bright max-w-xl">Not sure which of these you need?</h2>
+          <Link to="/contact" className="btn-pill btn-gold shrink-0">Get in Touch</Link>
         </div>
       </section>
     </motion.div>

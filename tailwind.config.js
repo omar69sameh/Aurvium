@@ -60,18 +60,22 @@ export default {
       },
       borderRadius: {
         "DEFAULT": "0px",
-        "lg": "0px",
-        "xl": "0px",
+        "sm": "8px",
+        "md": "12px",
+        "lg": "16px",
+        "xl": "20px",
+        "2xl": "28px",
+        "3xl": "36px",
         "full": "9999px"
       },
       spacing: {
         "stack_sm": "8px",
         "stack_md": "16px",
-        "gutter": "24px",
+        "gutter": "clamp(24px, 3vw, 56px)",
         "section_v_padding": "96px",
         "stack_lg": "32px",
         "section_v_padding_mobile": "64px",
-        "max_width": "1120px",
+        "max_width": "100%",
         "margin_container": "auto"
       },
       fontFamily: {
