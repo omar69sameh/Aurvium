@@ -14,12 +14,22 @@ const sectionReveal = {
   transition: { duration: 0.6, ease: 'easeOut' }
 };
 
-// Where submissions are sent. Set this to a form endpoint (e.g. Formspree,
-// Basin, or your own serverless function) to deliver straight to an inbox.
-// While it's empty, the form falls back to composing an email in the visitor's
-// own mail client so the primary contact path still works.
-const FORM_ENDPOINT = '';
+// ─── Where the form goes ────────────────────────────────────────────────────
+// Submissions are delivered to FORM_RECIPIENT. Three paths, in priority order:
+//   1. Web3Forms  — set VITE_WEB3FORMS_KEY in .env  (recommended, free)
+//   2. Any JSON endpoint — set VITE_CONTACT_ENDPOINT (Formspree, Basin, lambda)
+//   3. Fallback   — opens the visitor's mail client addressed to FORM_RECIPIENT
+// With no env vars set, path 3 runs and the form still works.
+const FORM_RECIPIENT = 'omar2003.sameh@gmail.com';
+
+// Address shown on the page (brand-facing, separate from the delivery target).
 const CONTACT_EMAIL = 'hello@aurvium.com';
+
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || '';
+const FORM_ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT || '';
+
+// True when submissions post straight to an inbox (no mail-client hand-off).
+const DELIVERS_DIRECTLY = Boolean(WEB3FORMS_KEY || FORM_ENDPOINT);
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -47,12 +57,45 @@ export default function Contact() {
     return next;
   };
 
+  const buildSubject = () => `Diagnostic intake — ${form.company.trim() || form.name.trim()}`;
+
+  const buildBody = () =>
+    `Name: ${form.name}\nEmail: ${form.email}\nCompany & approx. ARR: ${form.company}\n\nWhat's breaking:\n${form.message}`;
+
   const submitViaMailto = () => {
-    const subject = encodeURIComponent(`Diagnostic intake — ${form.company.trim() || form.name.trim()}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nCompany & approx. ARR: ${form.company}\n\nWhat's breaking:\n${form.message}`
-    );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    const subject = encodeURIComponent(buildSubject());
+    const body = encodeURIComponent(buildBody());
+    window.location.href = `mailto:${FORM_RECIPIENT}?subject=${subject}&body=${body}`;
+  };
+
+  const submitViaWeb3Forms = async () => {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: buildSubject(),
+        from_name: form.name || 'Aurvium website',
+        replyto: form.email,
+        name: form.name,
+        email: form.email,
+        company: form.company,
+        message: form.message,
+      }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || result.success === false) {
+      throw new Error(result.message || `Request failed: ${response.status}`);
+    }
+  };
+
+  const submitViaEndpoint = async () => {
+    const response = await fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ ...form, to: FORM_RECIPIENT, subject: buildSubject() }),
+    });
+    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
   };
 
   const handleSubmit = async (event) => {
@@ -75,13 +118,10 @@ export default function Contact() {
     setErrors({});
 
     try {
-      if (FORM_ENDPOINT) {
-        const response = await fetch(FORM_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(form),
-        });
-        if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+      if (WEB3FORMS_KEY) {
+        await submitViaWeb3Forms();
+      } else if (FORM_ENDPOINT) {
+        await submitViaEndpoint();
       } else {
         submitViaMailto();
       }
@@ -183,13 +223,13 @@ export default function Contact() {
                 </div>
                 <h3 className="font-display-lg text-headline-md text-on-surface">Thank you — your note is on its way.</h3>
                 <p className="font-body-md text-on-surface-variant leading-relaxed">
-                  {FORM_ENDPOINT
+                  {DELIVERS_DIRECTLY
                     ? 'We reply within one business day to schedule the Initial Fit Conversation.'
                     : 'Your email client should have opened with the details ready to send. If it didn’t, email us directly at '}
-                  {!FORM_ENDPOINT && (
+                  {!DELIVERS_DIRECTLY && (
                     <a className="text-primary hover:underline" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
                   )}
-                  {!FORM_ENDPOINT && '.'}
+                  {!DELIVERS_DIRECTLY && '.'}
                 </p>
                 <button
                   type="button"
