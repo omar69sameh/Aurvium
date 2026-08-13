@@ -96,12 +96,14 @@ export default function Layout({ children }) {
             <Icon name={mobileMenuOpen ? 'close' : 'menu'} size={24} />
           </button>
 
-          <Link
-            to="/contact"
-            className="btn-pill btn-primary hidden md:inline-flex"
-          >
-            Get in Touch
-          </Link>
+          {/* Desktop only — on mobile the CTA lives inside the dropdown menu.
+              The wrapper does the hiding because .btn-pill sets its own
+              `display`, which would otherwise beat Tailwind's `hidden`. */}
+          <div className="hidden md:block">
+            <Link to="/contact" className="btn-pill btn-primary">
+              Get in Touch
+            </Link>
+          </div>
         </div>
 
         <div

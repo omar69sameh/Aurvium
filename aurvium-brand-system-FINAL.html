@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurvium — Brand System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:        #1A1916;
+    --ink-soft:   #2C2B27;
+    --gold:       #B8922A;
+    --gold-line:  rgba(184,146,42,0.9);
+    --gilt:       #D4AF5A;
+    --parchment:  #EDE8DC;
+    --parchment-lt: #F4F0E6;
+    --stone:      #8A867E;
+    --stone-lt:   #C4BFB5;
+    --rule:       rgba(184,146,42,0.22);
+    --rule-soft:  rgba(26,25,22,0.10);
+
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'SF Mono', monospace;
+
+    --measure: 640px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  h1, h2, h3 { text-wrap: balance; font-weight: 400; }
+  img, svg { display: block; max-width: 100%; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ── shared rhythm ── */
+  .doc-section { padding: 88px 64px; border-bottom: 1px solid var(--rule); }
+  .doc-section.tight { padding-bottom: 0; }
+  .measure { max-width: var(--measure); }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 400;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 18px; display: flex; align-items: center; gap: 14px;
+  }
+  .eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--gold); opacity: 0.6; }
+  .doc-title {
+    font-family: var(--font-display); font-size: 40px; font-weight: 400;
+    letter-spacing: 0.005em; margin-bottom: 20px; line-height: 1.15;
+  }
+  .doc-title em { font-style: italic; color: var(--stone); font-weight: 400; }
+  .lede { font-size: 16px; line-height: 1.85; color: var(--ink-soft); max-width: 620px; }
+  .lede + .lede { margin-top: 14px; }
+
+  /* ── recurring channel divider (echoes the mark) ── */
+  .channel-rule { display: flex; align-items: center; gap: 0; margin: 56px 0; }
+  .channel-rule .ln { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold-line) 25%, var(--gold-line) 75%, transparent); opacity: 0.55; }
+  .channel-rule .gap { width: 44px; height: 10px; }
+
+  /* ═══════════════ COVER ═══════════════ */
+  .cover {
+    background: var(--ink); color: var(--parchment);
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    padding: 80px 40px; position: relative; overflow: hidden;
+  }
+  .cover-kicker {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--stone-lt); margin-bottom: 72px;
+  }
+  .cover-lockup { display: flex; align-items: center; gap: 30px; }
+  .cover-wm { font-family: var(--font-display); font-size: 64px; letter-spacing: 0.01em; color: var(--parchment); line-height: 1; }
+  .cover-sub {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--stone-lt); border-top: 1px solid rgba(196,191,181,0.28); padding-top: 8px; margin-top: 10px; display: block;
+  }
+  .cover-tagline {
+    font-family: var(--font-display); font-style: italic; font-size: 19px;
+    color: var(--stone-lt); margin-top: 56px; max-width: 460px; line-height: 1.6;
+  }
+  .cover-meta {
+    position: absolute; bottom: 44px; left: 0; right: 0;
+    display: flex; justify-content: space-between; padding: 0 56px;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: rgba(196,191,181,0.45);
+  }
+
+  /* ═══════════════ STRATEGY ═══════════════ */
+  .strat-block { margin-bottom: 44px; }
+  .strat-label {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--stone); margin-bottom: 10px;
+  }
+  .strat-body { font-size: 15px; line-height: 1.85; color: var(--ink-soft); max-width: 620px; }
+  .wedge-table { width: 100%; border-collapse: collapse; margin-top: 8px; max-width: 720px; }
+  .wedge-table th {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--stone); text-align: left; padding: 0 16px 10px 0; border-bottom: 1px solid var(--rule);
+  }
+  .wedge-table td {
+    font-size: 13.5px; line-height: 1.7; color: var(--ink-soft); padding: 16px 16px 16px 0;
+    border-bottom: 1px solid var(--rule-soft); vertical-align: top;
+  }
+  .wedge-table td:first-child { font-family: var(--font-sans); font-weight: 500; color: var(--ink); white-space: nowrap; }
+  .tagline-card {
+    background: var(--ink); color: var(--parchment); padding: 48px 52px;
+    margin-top: 8px; max-width: 620px;
+  }
+  .tagline-card .tc-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--stone-lt); margin-bottom: 16px; }
+  .tagline-card .tc-main { font-family: var(--font-display); font-size: 25px; line-height: 1.4; }
+  .tagline-card .tc-main .g { color: var(--gilt); }
+  .tagline-card .tc-sub { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--stone-lt); margin-top: 18px; }
+  .name-etym { display: flex; gap: 40px; margin-top: 8px; }
+  .name-etym div { flex: 1; }
+  .name-etym .ne-word { font-family: var(--font-display); font-size: 20px; color: var(--gold); margin-bottom: 4px; }
+  .name-etym .ne-def { font-size: 12.5px; color: var(--stone); line-height: 1.6; }
+
+  /* ═══════════════ IDENTITY — LOGO ═══════════════ */
+  .lockup { display: flex; align-items: center; gap: 22px; }
+  .lockup .div-v { width: 1px; flex-shrink: 0; background: var(--rule); }
+  .lockup .wm-block { display: flex; flex-direction: column; gap: 7px; }
+  .wm { font-family: var(--font-display); letter-spacing: 0.01em; line-height: 1; color: var(--ink); }
+  .wm.on-dark { color: var(--parchment); }
+  .wm.on-gold { color: var(--ink); }
+  .rule-h { height: 1px; background: var(--rule); }
+  .rule-h.on-dark { background: rgba(196,191,181,0.22); }
+  .rule-h.on-gold { background: rgba(26,25,22,0.28); }
+  .tag-line { font-family: var(--font-mono); font-weight: 300; letter-spacing: 0.24em; text-transform: uppercase; color: var(--stone); }
+  .tag-line.on-dark { color: var(--stone-lt); }
+  .tag-line.on-gold { color: rgba(26,25,22,0.62); }
+
+  .logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 8px; }
+  .logo-cell { padding: 64px 56px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .logo-cell.on-light { background: var(--parchment-lt); border: 1px solid var(--rule); }
+  .logo-cell.on-dark { background: var(--ink); }
+  .logo-cell.on-gold { background: var(--gold); }
+  .logo-cell-tag {
+    position: absolute; bottom: 18px; left: 24px;
+    font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.24em; text-transform: uppercase;
+  }
+  .logo-cell.on-light .logo-cell-tag { color: var(--stone); }
+  .logo-cell.on-dark .logo-cell-tag { color: var(--stone-lt); opacity: 0.7; }
+  .logo-cell.on-gold .logo-cell-tag { color: rgba(26,25,22,0.55); }
+
+  .size-strip { display: flex; align-items: flex-end; gap: 56px; flex-wrap: wrap; background: var(--parchment-lt); border: 1px solid var(--rule); padding: 48px 56px; margin-top: 2px; }
+  .size-item { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .size-item span { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--stone); }
+
+  .clear-demo { background: var(--parchment-lt); border: 1px solid var(--rule); padding: 72px; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .cs-box { position: relative; }
+  .cs-guide { position: absolute; inset: -28px; border: 1px dashed rgba(184,146,42,0.45); }
+  .cs-note { position: absolute; top: -46px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; color: var(--gold); text-transform: uppercase; }
+
+  .donts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 2px; }
+  .dont-cell { background: var(--parchment-lt); border: 1px solid var(--rule); padding: 40px 36px; display: flex; flex-direction: column; gap: 24px; position: relative; min-height: 150px; }
+  .dont-x { position: absolute; top: 18px; right: 20px; font-family: var(--font-mono); font-size: 11px; color: #A8503A; }
+  .dont-label { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--stone); border-top: 1px solid var(--rule); padding-top: 16px; }
+
+  /* ═══════════════ IDENTITY — COLOR ═══════════════ */
+  .palette-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; margin-top: 8px; }
+  .swatch-block { height: 128px; }
+  .swatch-info { background: var(--parchment-lt); border: 1px solid var(--rule); border-top: none; padding: 16px 18px; }
+  .swatch-name { font-family: var(--font-sans); font-weight: 500; font-size: 12.5px; color: var(--ink); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 9.5px; color: var(--stone); margin-top: 3px; letter-spacing: 0.04em; }
+  .swatch-role { font-family: var(--font-mono); font-size: 8px; color: var(--stone-lt); margin-top: 5px; letter-spacing: 0.06em; line-height: 1.5; }
+
+  /* ═══════════════ IDENTITY — TYPE ═══════════════ */
+  .type-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin-top: 8px; }
+  .type-cell { background: var(--parchment-lt); border: 1px solid var(--rule); padding: 40px 36px; display: flex; flex-direction: column; justify-content: space-between; min-height: 300px; }
+  .type-spec-lg { font-family: var(--font-display); font-size: 38px; color: var(--ink); line-height: 1.1; }
+  .type-spec-md { font-family: var(--font-sans); font-weight: 400; font-size: 15px; color: var(--ink); line-height: 1.7; }
+  .type-spec-mono { font-family: var(--font-mono); font-size: 12px; color: var(--ink); line-height: 1.9; letter-spacing: 0.03em; }
+  .type-meta { border-top: 1px solid var(--rule); padding-top: 16px; margin-top: 24px; }
+  .type-name { font-family: var(--font-sans); font-weight: 500; font-size: 13px; color: var(--ink); }
+  .type-role { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-top: 6px; }
+  .type-detail { font-family: var(--font-mono); font-size: 8.5px; color: var(--stone); margin-top: 8px; line-height: 1.8; letter-spacing: 0.03em; }
+
+  /* ═══════════════ VOICE ═══════════════ */
+  .voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 8px; }
+  .voice-item { padding: 40px 40px; background: var(--parchment-lt); }
+  .voice-item.dark { background: var(--ink-soft); }
+  .voice-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; margin-bottom: 20px; }
+  .voice-item:not(.dark) .voice-label { color: var(--gold); }
+  .voice-item.dark .voice-label { color: #6E6656; }
+  .voice-quote { font-family: var(--font-display); font-size: 20px; line-height: 1.5; }
+  .voice-item:not(.dark) .voice-quote { color: var(--ink); }
+  .voice-item.dark .voice-quote { color: #86807A; font-style: italic; }
+  .voice-body { font-size: 12.5px; line-height: 1.8; margin-top: 16px; }
+  .voice-item:not(.dark) .voice-body { color: var(--stone); }
+  .voice-item.dark .voice-body { color: #565148; }
+
+  /* ═══════════════ COLLATERAL STAGE ═══════════════ */
+  .stage { background: #2A2822; padding: 72px 64px; display: flex; gap: 36px; align-items: flex-start; flex-wrap: wrap; }
+  .stage-label { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.22em; text-transform: uppercase; color: #85806F; margin-bottom: 14px; }
+
+  .card { width: 340px; height: 194px; padding: 32px 34px; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+  .card.light { background: var(--parchment-lt); border: 1px solid var(--rule); }
+  .card.dark { background: var(--ink); }
+  .card-name { font-family: var(--font-display); font-size: 16px; }
+  .card.light .card-name { color: var(--ink); }
+  .card.dark .card-name { color: var(--parchment); }
+  .card-title { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 4px; color: var(--stone); }
+  .card-gold-rule { width: 22px; height: 1px; background: var(--gold); margin: 12px 0; }
+  .card-contact { font-family: var(--font-mono); font-size: 8.5px; line-height: 2; letter-spacing: 0.04em; color: var(--stone); }
+  .card.dark .card-contact { color: var(--stone-lt); }
+
+  .letterhead { width: 620px; background: var(--parchment-lt); box-shadow: 0 2px 24px rgba(0,0,0,0.28); }
+  .lh-topbar { height: 3px; background: var(--gold); }
+  .lh-header { padding: 44px 52px 32px; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: flex-start; }
+  .lh-address { font-family: var(--font-mono); font-size: 8.5px; line-height: 2; color: var(--stone); letter-spacing: 0.05em; text-align: right; }
+  .lh-body { padding: 44px 52px; }
+  .lh-date { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); margin-bottom: 30px; }
+  .lh-recipient { font-family: var(--font-sans); font-size: 13.5px; color: var(--ink); line-height: 1.8; margin-bottom: 26px; }
+  .lh-subject { font-family: var(--font-display); font-size: 19px; color: var(--ink); margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+  .lh-para { font-size: 12.5px; line-height: 1.85; color: var(--ink-soft); margin-bottom: 16px; max-width: 480px; }
+  .lh-sign-name { font-family: var(--font-display); font-size: 17px; color: var(--ink); margin-top: 30px; }
+  .lh-sign-title { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.22em; color: var(--stone); margin-top: 4px; }
+  .lh-footer { padding: 18px 52px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; }
+  .lh-footer span { font-family: var(--font-mono); font-size: 7.5px; letter-spacing: 0.14em; color: var(--stone-lt); }
+
+  .envelope { width: 560px; height: 264px; background: var(--parchment-lt); border: 1px solid var(--rule); position: relative; }
+  .env-return { position: absolute; top: 28px; left: 34px; display: flex; align-items: center; gap: 10px; }
+  .env-return span { font-family: var(--font-mono); font-size: 7.5px; letter-spacing: 0.18em; color: var(--stone); }
+  .env-to { position: absolute; bottom: 46px; right: 44px; text-align: right; font-family: var(--font-sans); font-size: 13px; color: var(--ink); line-height: 1.7; }
+  .env-rule { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold); opacity: 0.55; }
+
+  .invoice { width: 640px; background: var(--parchment-lt); box-shadow: 0 2px 24px rgba(0,0,0,0.28); }
+  .inv-head { background: var(--ink); padding: 36px 48px; display: flex; justify-content: space-between; align-items: center; }
+  .inv-head-tag { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.32em; color: var(--stone-lt); margin-top: 6px; }
+  .inv-num-label { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone-lt); text-align: right; opacity: 0.7; }
+  .inv-num-val { font-family: var(--font-mono); font-size: 15px; color: var(--parchment); text-align: right; margin-top: 4px; letter-spacing: 0.05em; }
+  .inv-meta { padding: 28px 48px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; border-bottom: 1px solid var(--rule); }
+  .inv-meta label { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); display: block; margin-bottom: 6px; }
+  .inv-meta p { font-size: 12.5px; color: var(--ink); line-height: 1.6; }
+  .inv-table { padding: 20px 48px; }
+  .inv-row-head { display: grid; grid-template-columns: 4fr 1fr; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+  .inv-row-head span { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); }
+  .inv-row-head span:last-child { text-align: right; }
+  .inv-row { display: grid; grid-template-columns: 4fr 1fr; padding: 13px 0; border-bottom: 1px solid var(--rule-soft); font-size: 12px; color: var(--ink-soft); }
+  .inv-row .amt { text-align: right; font-family: var(--font-mono); }
+  .inv-totals { padding: 18px 48px 32px; display: flex; justify-content: flex-end; }
+  .inv-total-row { display: flex; gap: 40px; font-family: var(--font-mono); font-size: 10px; color: var(--stone); }
+  .inv-total-row.grand { font-size: 17px; color: var(--ink); margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--rule); }
+  .inv-foot { padding: 16px 48px; background: var(--parchment); border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 8.5px; color: var(--stone); line-height: 1.8; }
+
+  .email-shell { width: 600px; background: #EEE9DE; box-shadow: 0 2px 24px rgba(0,0,0,0.28); }
+  .email-meta { padding: 14px 24px; background: #E4DFD3; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 8.5px; color: var(--stone); }
+  .email-band { background: var(--ink); padding: 30px 44px; display: flex; justify-content: space-between; align-items: center; }
+  .email-band-right { font-family: var(--font-mono); font-size: 7.5px; letter-spacing: 0.22em; color: var(--stone-lt); text-align: right; line-height: 2; }
+  .email-body { padding: 34px 44px; }
+  .email-greet { font-family: var(--font-display); font-size: 17px; color: var(--ink); margin-bottom: 14px; }
+  .email-p { font-size: 12px; line-height: 1.8; color: var(--ink-soft); margin-bottom: 14px; }
+  .email-cta { margin: 20px 0; padding: 18px 22px; background: var(--parchment); border-left: 2px solid var(--gold); font-size: 12px; color: var(--ink-soft); line-height: 1.7; }
+  .email-btn { display: inline-block; margin-top: 10px; background: var(--ink); color: var(--parchment); font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; padding: 9px 18px; }
+
+  /* footer */
+  .doc-footer { padding: 44px 64px; background: var(--ink); color: var(--stone-lt); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; }
+
+  @media (max-width: 860px) {
+    .doc-section { padding: 56px 24px; }
+    .logo-grid, .type-grid, .voice-grid, .palette-grid, .donts-grid { grid-template-columns: 1fr; }
+    .wedge-table { display: block; overflow-x: auto; }
+    .stage { padding: 40px 24px; overflow-x: auto; }
+    .card, .letterhead, .envelope, .invoice, .email-shell { width: 100%; max-width: 340px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ COVER ═══════════════════════════ -->
+<div class="cover">
+  <div class="cover-kicker">Brand System · Version 2.0 · Consolidated</div>
+  <div class="cover-lockup">
+    <svg width="72" height="84" viewBox="0 0 72 84" fill="none">
+      <defs>
+        <linearGradient id="gA" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#B8922A" stop-opacity="0"/>
+          <stop offset="16%" stop-color="#D4AF5A" stop-opacity="1"/>
+          <stop offset="84%" stop-color="#D4AF5A" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#B8922A" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <polygon points="36,1 65,35 7,35" fill="#EDE8DC"/>
+      <polygon points="7,49 65,49 36,83" fill="#EDE8DC"/>
+      <rect x="2" y="39.3" width="68" height="3.4" fill="url(#gA)"/>
+    </svg>
+    <div>
+      <div class="cover-wm">Aurvium</div>
+      <span class="cover-sub">Finance Architecture</span>
+    </div>
+  </div>
+  <div class="cover-tagline">"The channel through which financial value flows."</div>
+  <div class="cover-meta">
+    <span>Aurvium · Internal Reference</span>
+    <span>Prepared July 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 01 — STRATEGY ═══════════════════════════ -->
+<section class="doc-section">
+  <div class="eyebrow">01 — Strategy</div>
+  <h2 class="doc-title">What Aurvium is, <em>precisely.</em></h2>
+  <p class="lede">Everything downstream — the mark, the palette, the way the invoice is worded — is a consequence of the decisions on this page. If a future piece of work contradicts something here, the work is wrong, not this page.</p>
+
+  <div class="channel-rule"><div class="ln"></div><div class="gap"></div><div class="ln"></div></div>
+
+  <div class="strat-block">
+    <div class="strat-label">Category</div>
+    <div class="strat-body"><strong style="color:var(--ink); font-weight:500;">Finance Architecture.</strong> Not a dashboard, not a bookkeeping service, not RevRec software. Aurvium is a studio that designs and builds the systems — revenue recognition, billing pipelines, ERP integration, MRR/ARR reporting — that a scaling company's finance function runs on permanently.</div>
+  </div>
+
+  <div class="strat-block">
+    <div class="strat-label">Who it's for</div>
+    <div class="strat-body">VC-backed SaaS companies roughly <strong style="color:var(--ink); font-weight:500;">$5M–$30M ARR</strong> — past the point where spreadsheets and manual Stripe reconciliation hold up, before the company can justify hiring a full systems team in-house. The buyer is the first real finance hire: a Head of Finance or newly-appointed CFO who has to make the finance function board-ready and audit-ready, fast, without engineers to lean on.</div>
+  </div>
+
+  <div class="strat-block">
+    <div class="strat-label">The wedge</div>
+    <table class="wedge-table">
+      <tr><th>Alternative</th><th>Why it falls short</th></tr>
+      <tr><td>Hiring in-house</td><td>Slow to recruit for, expensive to carry at this stage, and the first hire is usually generalist — not someone who has built ERP and revenue-recognition architecture before.</td></tr>
+      <tr><td>Outsourced bookkeeping / fractional CFO firms</td><td>Maintain the books that already exist. They don't design the systems those books depend on — so the underlying fragility never gets fixed, just monitored.</td></tr>
+      <tr><td><strong style="color:var(--gold); font-weight:500;">Aurvium</strong></td><td>Closer to an architecture firm than an accounting firm. Engaged for a defined build — discovery, design, implementation — and leaves behind a permanent system, not a recurring service line.</td></tr>
+    </table>
+  </div>
+
+  <div class="strat-block">
+    <div class="strat-label">Business model</div>
+    <div class="strat-body">Project-based engagements with a fixed scope and a defined deliverable — not a subscription. This is why every piece of collateral in this system is shaped like a proposal or an invoice, never a product dashboard.</div>
+  </div>
+
+  <div class="strat-block">
+    <div class="strat-label">Tagline &amp; name</div>
+    <div class="tagline-card">
+      <div class="tc-label">External-facing line</div>
+      <div class="tc-main">Finance architecture for companies <span class="g">built to scale.</span></div>
+      <div class="tc-sub">"The channel through which financial value flows." — internal, used in founding story &amp; long-form writing only.</div>
+    </div>
+    <div class="name-etym">
+      <div><div class="ne-word">Aurum</div><div class="ne-def">Latin for gold — the oldest unit of financial value.</div></div>
+      <div><div class="ne-word">-vium</div><div class="ne-def">A path, a channel, a conduit.</div></div>
+      <div><div class="ne-word">Aurvium</div><div class="ne-def">The channel value moves through. Newly formed — built to last.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 02 — IDENTITY: LOGO ═══════════════════════════ -->
+<section class="doc-section">
+  <div class="eyebrow">02 — Identity / The Mark</div>
+  <h2 class="doc-title">Two halves, one channel.</h2>
+  <p class="lede">The mark is a diamond split at its widest point — two solid forms held apart by a precise gold channel. It's the one piece of prior work strong enough to keep outright: the channel <em>is</em> the -vium in Aurvium, made visible rather than illustrated. What changed here is proportion, not concept — the gap was too tight in earlier drafts and has been opened, faded at both ends, and shifted slightly above true centre so the two halves read as equal weight to the eye.</p>
+
+  <div class="logo-grid">
+    <div class="logo-cell on-light">
+      <div class="lockup">
+        <svg width="52" height="60" viewBox="0 0 72 84" fill="none">
+          <defs><linearGradient id="gB" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#B8922A" stop-opacity="0"/><stop offset="16%" stop-color="#B8922A"/><stop offset="84%" stop-color="#B8922A"/><stop offset="100%" stop-color="#B8922A" stop-opacity="0"/></linearGradient></defs>
+          <polygon points="36,1 65,35 7,35" fill="#1A1916"/><polygon points="7,49 65,49 36,83" fill="#1A1916"/><rect x="2" y="39.3" width="68" height="3.4" fill="url(#gB)"/>
+        </svg>
+        <div class="div-v" style="height:56px; background:var(--rule);"></div>
+        <div class="wm-block">
+          <span class="wm" style="font-size:34px;">Aurvium</span>
+          <div class="rule-h"></div>
+          <span class="tag-line" style="font-size:9px;">Finance Architecture</span>
+        </div>
+      </div>
+      <div class="logo-cell-tag">Primary — Light</div>
+    </div>
+    <div class="logo-cell on-dark">
+      <div class="lockup">
+        <svg width="52" height="60" viewBox="0 0 72 84" fill="none">
+          <defs><linearGradient id="gC" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#D4AF5A" stop-opacity="0"/><stop offset="16%" stop-color="#D4AF5A"/><stop offset="84%" stop-color="#D4AF5A"/><stop offset="100%" stop-color="#D4AF5A" stop-opacity="0"/></linearGradient></defs>
+          <polygon points="36,1 65,35 7,35" fill="#EDE8DC"/><polygon points="7,49 65,49 36,83" fill="#EDE8DC"/><rect x="2" y="39.3" width="68" height="3.4" fill="url(#gC)"/>
+        </svg>
+        <div class="div-v" style="height:56px; background:rgba(196,191,181,0.22);"></div>
+        <div class="wm-block">
+          <span class="wm on-dark" style="font-size:34px;">Aurvium</span>
+          <div class="rule-h on-dark"></div>
+          <span class="tag-line on-dark" style="font-size:9px;">Finance Architecture</span>
+        </div>
+      </div>
+      <div class="logo-cell-tag">Primary — Dark</div>
+    </div>
+  </div>
+
+  <div class="size-strip">
+    <div class="size-item">
+      <svg width="64" height="74" viewBox="0 0 72 84" fill="none"><polygon points="36,1 65,35 7,35" fill="#1A1916"/><polygon points="7,49 65,49 36,83" fill="#1A1916"/><rect x="2" y="39.3" width="68" height="3.4" fill="#B8922A"/></svg>
+      <span>64px · App/doc icon</span>
+    </div>
+    <div class="size-item">
+      <svg width="40" height="46" viewBox="0 0 72 84" fill="none"><polygon points="36,1 65,35 7,35" fill="#1A1916"/><polygon points="7,49 65,49 36,83" fill="#1A1916"/><rect x="2" y="39.3" width="68" height="3.4" fill="#B8922A"/></svg>
+      <span>40px · Header</span>
+    </div>
+    <div class="size-item">
+      <svg width="26" height="30" viewBox="0 0 72 84" fill="none"><polygon points="36,2 63,34 9,34" fill="#1A1916"/><polygon points="9,50 63,50 36,82" fill="#1A1916"/><rect x="4" y="39" width="64" height="4" fill="#B8922A"/></svg>
+      <span>26px · Tab / button</span>
+    </div>
+    <div class="size-item">
+      <svg width="16" height="18" viewBox="0 0 72 84" fill="none"><polygon points="36,3 62,33 10,33" fill="#1A1916"/><polygon points="10,51 62,51 36,81" fill="#1A1916"/><rect x="6" y="38" width="60" height="6" fill="#B8922A"/></svg>
+      <span>16px · Favicon</span>
+    </div>
+    <div class="size-item" style="margin-left:auto;">
+      <div class="lockup" style="gap:14px;">
+        <svg width="30" height="34" viewBox="0 0 72 84" fill="none"><polygon points="36,1 65,35 7,35" fill="#1A1916"/><polygon points="7,49 65,49 36,83" fill="#1A1916"/><rect x="2" y="39.3" width="68" height="3.4" fill="#B8922A"/></svg>
+        <span class="wm" style="font-size:20px;">Aurvium</span>
+      </div>
+      <span>Compact lockup — nav / footer</span>
+    </div>
+  </div>
+
+  <div class="clear-demo">
+    <div class="cs-box">
+      <div class="cs-guide"></div>
+      <span class="cs-note">clear space = ½ mark height, all sides</span>
+      <div class="lockup">
+        <svg width="44" height="50" viewBox="0 0 72 84" fill="none"><polygon points="36,1 65,35 7,35" fill="#1A1916"/><polygon points="7,49 65,49 36,83" fill="#1A1916"/><rect x="2" y="39.3" width="68" height="3.4" fill="#B8922A"/></svg>
+        <div class="div-v" style="height:44px; background:var(--rule);"></div>
+        <div class="wm-block"><span class="wm" style="font-size:26px;">Aurvium</span><div class="rule-h"></div><span class="tag-line" style="font-size:8px;">Finance Architecture</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="donts-grid">
+    <div class="dont-cell">
+      <span class="dont-x">✕</span>
+      <div class="lockup"><svg width="36" height="42" viewBox="0 0 72 84" fill="none" style="transform:scaleX(1.6);"><polygon points="36,1 65,35 7,35" fill="#1A1916"/><polygon points="7,49 65,49 36,83" fill="#1A1916"/><rect x="2" y="39.3" width="68" height="3.4" fill="#B8922A"/></svg><span class="wm" style="font-size:22px; transform:scaleX(1.4); display:inline-block;">Aurvium</span></div>
+      <div class="dont-label">Never stretch the mark or wordmark independently</div>
+    </div>
+    <div class="dont-cell">
+      <span class="dont-x">✕</span>
+      <div class="lockup"><svg width="36" height="42" viewBox="0 0 72 84" fill="none"><polygon points="36,1 65,35 7,35" fill="#5B7FA8"/><polygon points="7,49 65,49 36,83" fill="#5B7FA8"/><rect x="2" y="39.3" width="68" height="3.4" fill="#5B7FA8"/></svg><span class="wm" style="font-size:22px; color:#5B7FA8;">Aurvium</span></div>
+      <div class="dont-label">Never introduce a colour outside this palette — no blue, no gradients beyond the gold fade</div>
+    </div>
+    <div class="dont-cell">
+      <span class="dont-x">✕</span>
+      <div class="lockup"><svg width="36" height="42" viewBox="0 0 72 84" fill="none"><polygon points="36,1 65,35 7,35" fill="#1A1916"/><polygon points="7,49 65,49 36,83" fill="#1A1916"/><rect x="2" y="39.3" width="68" height="3.4" fill="#B8922A"/></svg><span class="wm" style="font-size:11px;">Aurvium</span></div>
+      <div class="dont-label">Never let the mark outweigh a shrunk-down wordmark — rescale both together</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 02b — IDENTITY: COLOR ═══════════════════════════ -->
+<section class="doc-section">
+  <div class="eyebrow">02 — Identity / Colour</div>
+  <h2 class="doc-title">The colour of ledgers, not screens.</h2>
+  <p class="lede">Five colours, one job each. No blue, no tech-default gradients. Gold is an accent used in single hairlines and rules — never a fill, never a glow. This is the one palette; every hex value below is the only correct value for that name anywhere the brand appears.</p>
+
+  <div class="palette-grid">
+    <div><div class="swatch-block" style="background:#1A1916;"></div><div class="swatch-info"><div class="swatch-name">Iron</div><div class="swatch-hex">#1A1916</div><div class="swatch-role">Ink · mark · primary text</div></div></div>
+    <div><div class="swatch-block" style="background:#B8922A;"></div><div class="swatch-info"><div class="swatch-name">Aurum</div><div class="swatch-hex">#B8922A</div><div class="swatch-role">The one accent · rules only</div></div></div>
+    <div><div class="swatch-block" style="background:#D4AF5A;"></div><div class="swatch-info"><div class="swatch-name">Gilt</div><div class="swatch-hex">#D4AF5A</div><div class="swatch-role">Gold on dark grounds only</div></div></div>
+    <div><div class="swatch-block" style="background:#EDE8DC; border:1px solid var(--rule);"></div><div class="swatch-info"><div class="swatch-name">Parchment</div><div class="swatch-hex">#EDE8DC</div><div class="swatch-role">Primary background</div></div></div>
+    <div><div class="swatch-block" style="background:#F4F0E6; border:1px solid var(--rule);"></div><div class="swatch-info"><div class="swatch-name">Parchment&nbsp;Lt</div><div class="swatch-hex">#F4F0E6</div><div class="swatch-role">Cards &amp; panels</div></div></div>
+    <div><div class="swatch-block" style="background:#8A867E;"></div><div class="swatch-info"><div class="swatch-name">Stone</div><div class="swatch-hex">#8A867E</div><div class="swatch-role">Secondary text · labels</div></div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 02c — IDENTITY: TYPE ═══════════════════════════ -->
+<section class="doc-section">
+  <div class="eyebrow">02 — Identity / Typography</div>
+  <h2 class="doc-title">Gravitas, then precision.</h2>
+  <p class="lede">Three roles, deliberately not four. The earlier direction paired the mark with Cormorant Garamond — a fine typeface, but one that reads as private-bank stationery, not a systems studio. DM Serif Display keeps the same warmth and weight without the antique, calligraphic edge. IBM Plex was built by IBM for enterprise engineering documentation — it is quite literally the correct register for numbers, hex values, and labels in a brand about architecture.</p>
+
+  <div class="type-grid">
+    <div class="type-cell">
+      <div class="type-spec-lg">Finance<br><em style="color:var(--stone); font-style:italic;">Architecture</em></div>
+      <div class="type-meta">
+        <div class="type-name">DM Serif Display</div>
+        <div class="type-role">Display — wordmark, headlines</div>
+        <div class="type-detail">400, roman + italic<br>Used only at &gt;18px, never for UI copy</div>
+      </div>
+    </div>
+    <div class="type-cell">
+      <div class="type-spec-md">Aurvium designs and builds the systems a finance function runs on permanently — the way infrastructure should be, not the way software usually is.</div>
+      <div class="type-meta">
+        <div class="type-name">IBM Plex Sans</div>
+        <div class="type-role">Body — copy, UI, documents</div>
+        <div class="type-detail">300 / 400 / 500 / 600<br>15px body · 1.8 leading minimum</div>
+      </div>
+    </div>
+    <div class="type-cell">
+      <div class="type-spec-mono num">AV–2026–047<br>$38,000.00<br>ARR · MRR · NRR</div>
+      <div class="type-meta">
+        <div class="type-name">IBM Plex Mono</div>
+        <div class="type-role">Data — figures, tags, labels</div>
+        <div class="type-detail">300 / 400 / 500<br>tabular-nums on every column of digits</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 03 — VOICE ═══════════════════════════ -->
+<section class="doc-section">
+  <div class="eyebrow">03 — Voice &amp; Tone</div>
+  <h2 class="doc-title">Diagnose before you prescribe.</h2>
+  <p class="lede">Aurvium speaks the language of CFOs but thinks like an engineer. It never hedges with "not a vendor, not a consultant" — that's a definition by negation, and it tells a buyer nothing. It says exactly what it is and what it costs to get wrong.</p>
+
+  <div class="voice-grid">
+    <div class="voice-item">
+      <div class="voice-label">We say this</div>
+      <div class="voice-quote">"We build the revenue recognition layer your auditors will actually trust."</div>
+      <div class="voice-body">Specific, names the audience that matters (the auditor, not the CFO's inbox), implies the outcome without promising magic.</div>
+    </div>
+    <div class="voice-item dark">
+      <div class="voice-label">Not this</div>
+      <div class="voice-quote">"We transform your finance function with best-in-class solutions."</div>
+      <div class="voice-body">Vendor-speak. Says nothing a competitor couldn't also claim.</div>
+    </div>
+    <div class="voice-item">
+      <div class="voice-label">We say this</div>
+      <div class="voice-quote">"Your MRR pipeline is breaking because the data layer was never built for scale. We fix that permanently."</div>
+      <div class="voice-body">Diagnoses before prescribing — shows understanding of the problem before offering anything.</div>
+    </div>
+    <div class="voice-item dark">
+      <div class="voice-label">Not this</div>
+      <div class="voice-quote">"We'd love to help streamline your financial workflows!"</div>
+      <div class="voice-body">Eager to please. The exclamation mark alone disqualifies it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 04 — COLLATERAL ═══════════════════════════ -->
+<section class="doc-section tight">
+  <div class="eyebrow">04 — Collateral</div>
+  <h2 class="doc-title">Every touchpoint reads as an engagement, never a product.</h2>
+  <p class="lede">Business card, letterhead, invoice, email — no dashboard mockups. Aurvium bills for defined engagements; a dashboard would contradict the strategy on page one. The one earlier bug worth naming: an old invoice draft split flat project fees into a "Qty × Rate" table, which only makes sense for hourly billing. Fixed below to a single description-and-amount line.</p>
+</section>
+
+<div class="stage">
+  <div>
+    <div class="stage-label">Business card — light</div>
+    <div class="card light">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="22" height="26" viewBox="0 0 72 84" fill="none"><polygon points="36,1 65,35 7,35" fill="#1A1916"/><polygon points="7,49 65,49 36,83" fill="#1A1916"/><rect x="2" y="39.3" width="68" height="3.4" fill="#B8922A"/></svg>
+        <span class="wm" style="font-size:15px;">Aurvium</span>
+      </div>
+      <div>
+        <div class="card-name">Nour Al-Rashidi</div>
+        <div class="card-title">Head of Finance Architecture</div>
+        <div class="card-gold-rule"></div>
+        <div class="card-contact">n.alrashidi@aurvium.com<br>aurvium.com</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="stage-label">Business card — dark</div>
+    <div class="card dark">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="22" height="26" viewBox="0 0 72 84" fill="none"><polygon points="36,1 65,35 7,35" fill="#EDE8DC"/><polygon points="7,49 65,49 36,83" fill="#EDE8DC"/><rect x="2" y="39.3" width="68" height="3.4" fill="#D4AF5A"/></svg>
+        <span class="wm on-dark" style="font-size:15px;">Aurvium</span>
+      </div>
+      <div>
+        <div class="card-name">Nour Al-Rashidi</div>
+        <div class="card-title">Head of Finance Architecture</div>
+        <div class="card-gold-rule"></div>
+        <div class="card-contact">n.alrashidi@aurvium.com<br>aurvium.com</div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="stage-label">Card back — both variants</div>
+    <div class="card light" style="align-items:center; justify-content:center;">
+      <svg width="52" height="60" viewBox="0 0 72 84" fill="none"><polygon points="36,1 65,35 7,35" fill="#1A1916"/><polygon points="7,49 65,49 36,83" fill="#1A1916"/><rect x="2" y="39.3" width="68" height="3.4" fill="#B8922A"/></svg>
+    </div>
+  </div>
+</div>
+
+<div class="stage">
+  <div>
+    <div class="stage-label">Letterhead</div>
+    <div class="letterhead">
+      <div class="lh-topbar"></div>
+      <div class="lh-header">
+        <div class="lockup" style="gap:14px;">
+          <svg width="28" height="32" viewBox="0 0 72 84" fill="none"><polygon points="36,1 65,35 7,35" fill="#1A1916"/><polygon points="7,49 65,49 36,83" fill="#1A1916"/><rect x="2" y="39.3" width="68" height="3.4" fill="#B8922A"/></svg>
+          <div class="div-v" style="height:32px;"></div>
+          <div class="wm-block"><span class="wm" style="font-size:18px;">Aurvium</span><div class="rule-h"></div><span class="tag-line" style="font-size:7px;">Finance Architecture</span></div>
+        </div>
+        <div class="lh-address">aurvium.com<br>hello@aurvium.com<br>340 Pine Street, Suite 800<br>San Francisco, CA 94104</div>
+      </div>
+      <div class="lh-body">
+        <div class="lh-date">July 14, 2026</div>
+        <div class="lh-recipient">Sarah Chen<br>Chief Financial Officer<br>Meridian SaaS Inc.</div>
+        <div class="lh-subject">Re: Financial Systems Architecture Engagement</div>
+        <p class="lh-para">Dear Sarah,</p>
+        <p class="lh-para">Following our conversation last week, I'm pleased to outline the scope for your revenue recognition and MRR reporting infrastructure. The current system — Stripe webhooks, manual spreadsheet logic, a loosely integrated ERP — is sound at your current scale but will strain above $20M ARR.</p>
+        <p class="lh-para">What we propose is a permanent architectural layer: a clean data pipeline from Stripe through your ERP, with audit-ready revenue recognition applied at source.</p>
+        <div class="lh-sign-name">Nour Al-Rashidi</div>
+        <div class="lh-sign-title">Head of Finance Architecture · Aurvium</div>
+      </div>
+      <div class="lh-footer"><span>Aurvium Finance Architecture · Confidential</span><span>Page 1 of 1</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="stage">
+  <div>
+    <div class="stage-label">Envelope</div>
+    <div class="envelope">
+      <div class="env-return">
+        <svg width="14" height="16" viewBox="0 0 72 84" fill="none"><polygon points="36,1 65,35 7,35" fill="#1A1916"/><polygon points="7,49 65,49 36,83" fill="#1A1916"/><rect x="2" y="39.3" width="68" height="3.4" fill="#B8922A"/></svg>
+        <span>Aurvium · 340 Pine St, San Francisco CA</span>
+      </div>
+      <div class="env-to">Sarah Chen<br>Meridian SaaS Inc.<br>221 Main Street, Suite 1500<br>San Francisco, CA 94105</div>
+      <div class="env-rule"></div>
+    </div>
+  </div>
+</div>
+
+<div class="stage">
+  <div>
+    <div class="stage-label">Invoice — fixed (single amount column, no false hourly rate)</div>
+    <div class="invoice">
+      <div class="inv-head">
+        <div>
+          <span class="wm on-dark" style="font-size:22px;">Aurvium</span>
+          <div class="inv-head-tag">Finance Architecture</div>
+        </div>
+        <div>
+          <div class="inv-num-label">Invoice</div>
+          <div class="inv-num-val num">AV-2026-047</div>
+        </div>
+      </div>
+      <div class="inv-meta">
+        <div><label>Billed To</label><p>Sarah Chen<br>Meridian SaaS Inc.</p></div>
+        <div><label>Issue Date</label><p class="num">Jul 14, 2026</p></div>
+        <div><label>Due Date</label><p class="num">Aug 13, 2026</p></div>
+      </div>
+      <div class="inv-table">
+        <div class="inv-row-head"><span>Description</span><span>Amount</span></div>
+        <div class="inv-row"><span>Finance Systems Discovery &amp; Audit</span><span class="amt num">$8,500</span></div>
+        <div class="inv-row"><span>ERP Architecture &amp; Integration Design</span><span class="amt num">$14,000</span></div>
+        <div class="inv-row"><span>Stripe Pipeline &amp; Webhook Build</span><span class="amt num">$9,500</span></div>
+        <div class="inv-row"><span>MRR / ARR Reporting Layer</span><span class="amt num">$6,000</span></div>
+      </div>
+      <div class="inv-totals">
+        <div>
+          <div class="inv-total-row"><span>Subtotal</span><span class="num">$38,000</span></div>
+          <div class="inv-total-row grand"><span>Total Due</span><span class="num" style="margin-left:auto;">$38,000</span></div>
+        </div>
+      </div>
+      <div class="inv-foot">Payment due within 30 days · Wire or ACH preferred · hello@aurvium.com</div>
+    </div>
+  </div>
+</div>
+
+<div class="stage">
+  <div>
+    <div class="stage-label">Email — engagement follow-up</div>
+    <div class="email-shell">
+      <div class="email-meta"><span>Re: Financial Systems Proposal — Meridian SaaS</span><span class="num">Jul 14, 2026</span></div>
+      <div class="email-band">
+        <span class="wm on-dark" style="font-size:17px;">Aurvium</span>
+        <div class="email-band-right">Finance Architecture<br>aurvium.com</div>
+      </div>
+      <div class="email-body">
+        <div class="email-greet">Dear Sarah,</div>
+        <p class="email-p">I've completed the initial audit of your Stripe-to-ERP pipeline. Manageable now, structurally fragile above $25M ARR.</p>
+        <div class="email-cta">Ready to move forward? Discovery capacity is reserved for the week of August 4th.<br><span class="email-btn">Schedule a call →</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ 05 — APPENDIX ═══════════════════════════ -->
+<section class="doc-section">
+  <div class="eyebrow">05 — Appendix</div>
+  <h2 class="doc-title">What changed, and why.</h2>
+  <p class="lede">For continuity with everything built before this document — three separate design sessions produced three incompatible "final" systems. Here is exactly what this version kept, cut, and fixed, and the reasoning for each call.</p>
+
+  <table class="wedge-table" style="max-width:820px;">
+    <tr><th>Decision</th><th>Reasoning</th></tr>
+    <tr><td>Kept the split-diamond / channel mark</td><td>Most distinctive asset built across all three sessions, and the only one where the visual concept directly embodies the name's etymology (-vium = channel).</td></tr>
+    <tr><td>Cut Cormorant Garamond, adopted DM Serif Display + IBM Plex</td><td>Cormorant reads as private-bank / editorial luxury — the exact tonal risk flagged and rejected earlier in the same project when comparing logo directions. Never actually resolved before now.</td></tr>
+    <tr><td>Standardised on one gold, one full palette</td><td>Earlier files used four different gold hex values under the same swatch names across sessions.</td></tr>
+    <tr><td>Cut "not a vendor, not a consultant, not a software tool"</td><td>Definition by negation. Replaced with a positive definition and a named competitive wedge.</td></tr>
+    <tr><td>Declared project-based engagements, not subscription SaaS</td><td>Resolves the contradiction between services-shaped collateral (invoices, proposals) built in one session and a self-referential SaaS dashboard mockup built in another. Dashboard dropped entirely.</td></tr>
+    <tr><td>Fixed invoice table</td><td>Old draft priced flat project fees through a Qty × Rate column, which only makes sense for hourly billing.</td></tr>
+    <tr><td>Standardised domain &amp; contact format</td><td>aurvium.com and n.alrashidi@aurvium.com had drifted to aurvium.io and inconsistent name spellings in parallel sessions.</td></tr>
+  </table>
+</section>
+
+<div class="doc-footer">
+  <span>Aurvium · Brand System · v2.0</span>
+  <span>Supersedes all prior drafts</span>
+</div>
+
+</body>
+</html>
